@@ -4,80 +4,49 @@
 <div class="top-news">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-6 tn-left">
-				<div class="tn-img">
-					<img src="{% static 'images/top-news-1.jpg' %}" />
-					<div class="tn-content">
-						<div class="tn-content-inner">
-							<a class="tn-date" href=""
-								><i class="far fa-clock"></i>05-Feb-2020</a
-							>
-							<a class="tn-title" href=""
-								>Lorem ipsum dolor sit amet adipiscing elit</a
-							>
+{% for new in news %}
+    {% if forloop.first %}
+        <!-- Chap tomondagi katta yangilik -->
+        <div class="col-md-6 tn-left">
+            <div class="tn-img">
+                <img src="{{ new.image.url }}" alt="{{ new.title }}" />
+                <div class="tn-content">
+                    <div class="tn-content-inner">
+                        <a class="tn-date" href="">
+                            <i class="far fa-clock"></i>{{ new.publish_time}}
+                        </a>	
+                        <a class="tn-title" href="{% url 'news_detail' new.id %}">
+                            {{ new.title }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- O‘ng tomonni ochamiz -->
+        <div class="col-md-6 tn-right">
+            <div class="row">
+    {% else %}
+        <!-- O‘ng tomondagi kichik yangiliklar -->
+        <div class="col-md-6">
+            <div class="tn-img">
+                <img src="{{ new.image.url }}" alt="{{ new.title }}" />
+                <div class="tn-content">
+                    <div class="tn-content-inner">
+                        <a class="tn-date" href="">
+                            <i class="far fa-clock"></i>{{ new.publish_time }}
+                        </a>
+                        <a class="tn-title" href="{% url 'news_detail' new.id %}">
+                            {{ new.title }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
 						</div>
-					</div>
 				</div>
-			</div>
-			<div class="col-md-6 tn-right">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="tn-img">
-							<img src="{% static 'images/top-news-2.jpg' %}" />
-							<div class="tn-content">
-								<div class="tn-content-inner">
-									<a class="tn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="tn-title" href="">Integer faucibus pharetra odio</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="tn-img">
-							<img src="{% static 'images/top-news-3.jpg' %}" />
-							<div class="tn-content">
-								<div class="tn-content-inner">
-									<a class="tn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="tn-title" href="">Nulla vitae pharetra ligula</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="tn-img">
-							<img src="{% static 'images/top-news-4.jpg' %}" />
-							<div class="tn-content">
-								<div class="tn-content-inner">
-									<a class="tn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									>
-									<a class="tn-title" href="">Ut ac euismod tellus a blandit</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="tn-img">
-							<img src="{% static 'images/top-news-5.jpg' %}" />
-							<div class="tn-content">
-								<div class="tn-content-inner">
-									<a class="tn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="tn-title" href=""
-										>Cras ac egestas sem nec euismod</a
-									>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+
 		</div>
 	</div>
 </div>
@@ -88,93 +57,45 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-6">
-				<h2><i class="fas fa-align-justify"></i>Sports</h2>
+				<h2><i class="fas fa-align-justify"></i>Sport Habarlari</h2>
 				<div class="row cn-slider">
+					{% for sport in sport_news %}
 					<div class="col-md-6">
 						<div class="cn-img">
-							<img src="{% static 'images/cat-news-1.jpg' %}" />
+							<img src="{{ sport.image.url }}" alt="{{ sport.title }}" />
 							<div class="cn-content">
 								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
+									<a class="cn-date" href="{% url 'news_detail' sport.id %}"
+										><i class="far fa-clock"></i>{{ sport.publish_time }}</a
 									>
-									<a class="cn-title" href=""
-										>Cras sed semper puru vitae lobortis velit</a
+									<a class="cn-title" href="{% url 'news_detail' sport.id %}"
+										>{{ sport.title }}</a
 									>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="cn-img">
-							<img src="{% static 'images/cat-news-2.jpg' %}" />
-							<div class="cn-content">
-								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="cn-title" href="">Vestibulum ante ipsum primis</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="cn-img">
-							<img src="{% static 'images/cat-news-3.jpg' %}" />
-							<div class="cn-content">
-								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="cn-title" href="">Sed quis convallis lacus</a>
-								</div>
-							</div>
-						</div>
-					</div>
+			{% endfor %}
 				</div>
 			</div>
 			<div class="col-md-6">
-				<h2><i class="fas fa-align-justify"></i>Technology</h2>
+				<h2><i class="fas fa-align-justify"></i>Texnologiya</h2>
 				<div class="row cn-slider">
+					{% for tech in technology_news%}
 					<div class="col-md-6">
 						<div class="cn-img">
-							<img src="{% static 'images/cat-news-4.jpg' %}" />
+							<img src="{{ tech.image.url }}" alt="{{ tech.title }}" />
 							<div class="cn-content">
 								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
+									<a class="cn-date" href="{% url 'news_detail' tech.id %}"
+										><i class="far fa-clock"></i>{{ tech.publish_time }}</a
 									>
-									<a class="cn-title" href="">Vivamus vel felis nec magna</a>
+									<a class="cn-title" href="{% url 'news_detail' tech.id %}">{{ tech.title }}</a>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="cn-img">
-							<img src="{% static 'images/cat-news-5.jpg' %}" />
-							<div class="cn-content">
-								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="cn-title" href="">Phasellus vitae fermentum est</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="cn-img">
-							<img src="{% static 'images/cat-news-6.jpg' %}" />
-							<div class="cn-content">
-								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="cn-title" href="">Aenean ut varius dui</a>
-								</div>
-							</div>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
@@ -187,99 +108,46 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-6">
-				<h2><i class="fas fa-align-justify"></i>Business</h2>
+				<h2><i class="fas fa-align-justify"></i>Маҳаллий</h2>	
 				<div class="row cn-slider">
+					{% for max in maxalliy_news%}
 					<div class="col-md-6">
 						<div class="cn-img">
-							<img src="{% static 'images/cat-news-7.jpg' %}" />
+							<img src="{{ max.image.url }}" alt="{{ max.title }}" />
 							<div class="cn-content">
 								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
+									<a class="cn-date" href="{% url 'news_detail' max.id %}"
+										><i class="far fa-clock"></i>{{ max.publish_time }}</a
 									>
-									<a class="cn-title" href=""
-										>Interdum et malesuada fames ac ante</a
+									<a class="cn-title" href="{% url 'news_detail' max.id %}"
+										>{{ max.title }}</a
 									>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="cn-img">
-							<img src="{% static 'images/cat-news-8.jpg' %}" />
-							<div class="cn-content">
-								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="cn-title" href=""
-										>Mauris non ligula eget ante sagittis</a
-									>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="cn-img">
-							<img src="{% static 'images/cat-news-9.jpg' %}" />
-							<div class="cn-content">
-								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="cn-title" href=""
-										>Integer non nunc nec nulla aliquet</a
-									>
-								</div>
-							</div>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
+
 			<div class="col-md-6">
-				<h2><i class="fas fa-align-justify"></i>Entertainment</h2>
+				<h2><i class="fas fa-align-justify"></i>Xorij yangiliklari</h2>
 				<div class="row cn-slider">
+					{% for ext in external_news %}
 					<div class="col-md-6">
 						<div class="cn-img">
-							<img src="{% static 'images/cat-news-10.jpg' %}" />
+							<img src="{{ ext.image.url }}" alt="{{ ext.title }}" />
 							<div class="cn-content">
 								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
+									<a class="cn-date" href="{% url 'news_detail' ext.id %}"
+										><i class="far fa-clock"></i>{{ ext.publish_time }}</a
 									>
-									<a class="cn-title" href="">Ut laoreet justo non ornare</a>
+									<a class="cn-title" href="{% url 'news_detail' ext.id %}">{{ ext.title }}</a>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="cn-img">
-							<img src="{% static 'images/cat-news-11.jpg' %}" />
-							<div class="cn-content">
-								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="cn-title" href="">Proin a nulla ut enim feugiat</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="cn-img">
-							<img src="{% static 'images/cat-news-12.jpg' %}" />
-							<div class="cn-content">
-								<div class="cn-content-inner">
-									<a class="cn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<a class="cn-title" href=""
-										>Sed mauris sem sollicitudin at neque</a
-									>
-								</div>
-							</div>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
@@ -294,95 +162,29 @@
 			<div class="col-md-8">
 				<div class="row">
 					<div class="col-md-12">
-						<h2><i class="fas fa-align-justify"></i>Latest News</h2>
+						<h2><i class="fas fa-align-justify"></i>So'nggi Yangiliklar</h2>
 						<div class="row">
+							{% for new in news %}
 							<div class="col-lg-6">
 								<div class="mn-img">
-									<img src="{% static 'images/latest-news.jpg' %}" />
+									<img src="{{ new.image.url }}" alt="{{ new.title }}" />
 								</div>
 								<div class="mn-content">
-									<a class="mn-title" href=""
-										>Cras commodo sem ut porta laoreet</a
+									<a class="mn-title" href="{% url 'news_detail' new.id %}"
+										>{{ new.title }}</a
 									>
-									<a class="mn-date" href=""
-										><i class="far fa-clock"></i>05-Feb-2020</a
-									>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										Vivamus sed porta dui. Class aptent taciti sociosqu ad
-										litora torquent per conubia nostra inceptos...
-									</p>
+									<a class="mn-date" href="">
+										<i class="far fa-clock"></i> {{ new.publish_time }}
+									</a>
+									<p>{{ new.body|truncatewords:20 }}</p>
 								</div>
 							</div>
-							<div class="col-lg-6">
-								<div class="mn-list">
-									<div class="mn-img">
-										<img src="{% static 'images/latest-news.jpg' %}" />
-									</div>
-									<div class="mn-content">
-										<a class="mn-title" href=""
-											>Pellentesque sit amet rutrum lacus</a
-										>
-										<a class="mn-date" href=""
-											><i class="far fa-clock"></i>05-Feb-2020</a
-										>
-									</div>
-								</div>
-								<div class="mn-list">
-									<div class="mn-img">
-										<img src="{% static 'images/latest-news.jpg' %}" />
-									</div>
-									<div class="mn-content">
-										<a class="mn-title" href=""
-											>Proin id pretium orci, quis rhoncus eros</a
-										>
-										<a class="mn-date" href=""
-											><i class="far fa-clock"></i>05-Feb-2020</a
-										>
-									</div>
-								</div>
-								<div class="mn-list">
-									<div class="mn-img">
-										<img src="{% static 'images/latest-news.jpg' %}" />
-									</div>
-									<div class="mn-content">
-										<a class="mn-title" href=""
-											>Curabitur viverra scelerisque tempor</a
-										>
-										<a class="mn-date" href=""
-											><i class="far fa-clock"></i>05-Feb-2020</a
-										>
-									</div>
-								</div>
-								<div class="mn-list">
-									<div class="mn-img">
-										<img src="{% static 'images/latest-news.jpg' %}" />
-									</div>
-									<div class="mn-content">
-										<a class="mn-title" href=""
-											>Integer nec lorem facilisis interdum lorem non</a
-										>
-										<a class="mn-date" href=""
-											><i class="far fa-clock"></i>05-Feb-2020</a
-										>
-									</div>
-								</div>
-								<div class="mn-list">
-									<div class="mn-img">
-										<img src="{% static 'images/latest-news.jpg' %}" />
-									</div>
-									<div class="mn-content">
-										<a class="mn-title" href="">Interdum et malesuada fames</a>
-										<a class="mn-date" href=""
-											><i class="far fa-clock"></i>05-Feb-2020</a
-										>
-									</div>
-								</div>
-							</div>
+							{% endfor %}
 						</div>
 					</div>
+
 					<div class="col-md-12">
-						<h2><i class="fas fa-align-justify"></i>Popular News</h2>
+						<h2><i class="fas fa-align-justify"></i>Ommabop habarlar</h2>
 						<div class="row">
 							<div class="col-lg-6">
 								<div class="mn-img">
@@ -423,9 +225,7 @@
 											>Pellentesque ultrices quam id ipsum tempor</a
 										>
 										<a class="mn-date" href=""
-											><i class="far fa-clock"></i>05-Feb-2020</a
-										>
-									</div>
+											><i class="far fa-clock"></i>0{{ new.publish_time }}							</div>
 								</div>
 								<div class="mn-list">
 									<div class="mn-img">
@@ -467,6 +267,7 @@
 							</div>
 						</div>
 					</div>
+				
 				</div>
 			</div>
 
@@ -476,41 +277,13 @@
 						<h2><i class="fas fa-align-justify"></i>Category</h2>
 						<div class="category">
 							<ul class="fa-ul">
+								{% for category in categories %}
 								<li>
 									<span class="fa-li"
 										><i class="far fa-arrow-alt-circle-right"></i></span
-									><a href="">National</a>
+									><a href="">{{ category.name }}</a>
 								</li>
-								<li>
-									<span class="fa-li"
-										><i class="far fa-arrow-alt-circle-right"></i></span
-									><a href="">International</a>
-								</li>
-								<li>
-									<span class="fa-li"
-										><i class="far fa-arrow-alt-circle-right"></i></span
-									><a href="">Economics</a>
-								</li>
-								<li>
-									<span class="fa-li"
-										><i class="far fa-arrow-alt-circle-right"></i></span
-									><a href="">Politics</a>
-								</li>
-								<li>
-									<span class="fa-li"
-										><i class="far fa-arrow-alt-circle-right"></i></span
-									><a href="">Lifestyle</a>
-								</li>
-								<li>
-									<span class="fa-li"
-										><i class="far fa-arrow-alt-circle-right"></i></span
-									><a href="">Technology</a>
-								</li>
-								<li>
-									<span class="fa-li"
-										><i class="far fa-arrow-alt-circle-right"></i></span
-									><a href="">Trades</a>
-								</li>
+								{% endfor %}
 							</ul>
 						</div>
 					</div>
@@ -518,20 +291,9 @@
 					<div class="sidebar-widget">
 						<h2><i class="fas fa-align-justify"></i>Tags</h2>
 						<div class="tags">
-							<a href="">National</a>
-							<a href="">International</a>
-							<a href="">Economics</a>
-							<a href="">Politics</a>
-							<a href="">Lifestyle</a>
-							<a href="">Technology</a>
-							<a href="">Trades</a>
-							<a href="">National</a>
-							<a href="">International</a>
-							<a href="">Economics</a>
-							<a href="">Politics</a>
-							<a href="">Lifestyle</a>
-							<a href="">Technology</a>
-							<a href="">Trades</a>
+						{% for category in categories %}
+							<a href="">{{ category.name }}</a>
+						{% endfor %}
 						</div>
 					</div>
 
