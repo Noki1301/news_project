@@ -1,10 +1,46 @@
-{%extends "news/base.html" %} {% load static %} {% block title %}News detail
-{%endblock title %} {% block content %}
-<body>
-	<h2>{{ news.title }}</h2>
-	<p>Category: {{ news.category }}</p>
-	<img src="{{ news.image.url }}" alt="{{ news.title }}" />
-	<p>Published time: {{ news.publish_time }}</p>
-	<p>{{ news.body | linebreaks }}</p>
-</body>
+{% extends "news/base.html" %} {% load static %} {% block title %} {{ news.title
+}} | News detail {% endblock title %} {% block content %}
+<div class="container my-5">
+	<div class="card shadow-lg border-0 rounded-3">
+		<div class="card-body">
+			<h2 class="card-title mb-3 text-primary fw-bold">{{ news.title }}</h2>
+			<p class="text-muted mb-1">
+				<i class="bi bi-folder-fill"></i>
+				Category: <span class="fw-semibold">{{ news.category }}</span>
+			</p>
+			<p class="text-muted">
+				<i class="bi bi-clock"></i>
+				Published: {{ news.publish_time }}
+			</p>
+
+			{% if news.image %}
+			<div class="text-center my-4">
+				<img
+					src="{{ news.image.url }}"
+					alt="{{ news.title }}"
+					class="img-fluid rounded shadow-sm"
+					style="max-height: 400px; object-fit: cover"
+				/>
+			</div>
+			{% endif %}
+
+			<p class="card-text fs-5 mt-3">{{ news.body|linebreaks }}</p>
+
+			<div class="d-flex justify-content-end gap-2 mt-4">
+				<a
+					href="{% url 'news:news_update' news.slug %}"
+					class="btn btn-outline-warning"
+				>
+					<i class="bi bi-pencil-square"></i> Tahrirlash
+				</a>
+				<a
+					href="{% url 'news:news_delete' news.slug %}"
+					class="btn btn-outline-danger"
+				>
+					<i class="bi bi-trash"></i> O‘chirish
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock content %}

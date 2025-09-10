@@ -1,18 +1,49 @@
-{% extends 'news/base.html'%} {% load static %} {% block title %} Mahalliy
-yangiliklar {% endblock title %} {% block content %} {% for news in mahalliy_yangiliklar %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<h1>Mahalliy yangiliklar</h1>
-			<h2><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></h2>
-			<p>Category: {{ news.category }}</p>
-			<a href="{{ news.get_absolute_url }}"
-				><img src="{{ news.image.url }}" alt="{{ news.title }}"
-			/></a>
-			<p>Published time: {{ news.publish_time }}</p>
-			<p>{{ news.body | truncatewords:20 }}</p>
-			<hr />
-		</div>
-	</div>
+{% extends 'news/base.html'%}
+{% load static %}
+
+{% block title %}
+    Mahalliy yangiliklar
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4 text-center text-primary fw-bold">🏙️ Mahalliy yangiliklar</h1>
+    <div class="row g-4">
+        {% for news in mahalliy_yangiliklar %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 rounded-3">
+                <a href="{{ news.get_absolute_url }}">
+                    <img src="{{ news.image.url }}" 
+                         alt="{{ news.title }}" 
+                         class="card-img-top rounded-top"
+                         style="height: 220px; object-fit: cover;">
+                </a>
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold">
+                        <a href="{{ news.get_absolute_url }}" class="text-decoration-none text-dark">
+                            {{ news.title|truncatewords:8 }}
+                        </a>
+                    </h5>
+                    <p class="text-muted small mb-2">
+                        <i class="bi bi-folder-fill"></i> {{ news.category }} |
+                        <i class="bi bi-clock"></i> {{ news.publish_time }}
+                    </p>
+                    <p class="card-text text-secondary">
+                        {{ news.body|truncatewords:20 }}
+                    </p>
+                    <div class="mt-auto">
+                        <a href="{{ news.get_absolute_url }}" class="btn btn-sm btn-outline-primary">
+                            Batafsil o‘qish →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">Hozircha mahalliy yangiliklar mavjud emas.</p>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-{% endfor %} {% endblock content %}
+{% endblock content %}

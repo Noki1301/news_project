@@ -4,7 +4,15 @@ from .models import News, Category
 from django.shortcuts import get_object_or_404
 from .forms import ContactForm
 from django.contrib import messages
-from django.views.generic import TemplateView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import (
+    TemplateView,
+    ListView,
+    UpdateView,
+    DeleteView,
+    CreateView,
+    DetailView,
+)
 
 # Create your views here.
 
@@ -143,3 +151,39 @@ class SportNewsView(ListView):
     def get_queryset(self):
         news = self.model.published.all().filter(category__name="Спорт")
         return news
+
+
+class NewsUpdateView(UpdateView):
+    model = News
+    template_name = "crud/news_update.html"
+    fields = ["title", "body", "image", "category", "status"]
+
+    def form_valid(self, form):
+        messages.success(self.request, "Yangilik muvaffaqiyatli yangilandi!")
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
+
+class NewsDeleteView(DeleteView):
+    model = News
+    template_name = "crud/news_delete.html"
+    success_url = reverse_lazy("news:home_page")
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "Yangilik muvaffaqiyatli o'chirildi!")
+        return super().delete(request, *args, **kwargs)
+
+
+class NewsCreateView(CreateView):
+    model = News
+    template_name = "crud/news_create.html"
+    fields = ["title", "body", "image", "category", "status"]
+
+    def form_valid(self, form):
+        messages.success(self.request, "Yangilik muvaffaqiyatli yaratildi!")
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()

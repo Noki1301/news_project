@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -34,7 +35,7 @@ class News(models.Model):
         Published = "PB", "Published"
 
     title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250, unique=True)
+    slug = models.SlugField(max_length=250, unique=True, blank=True)
     body = models.TextField()
     image = models.ImageField(upload_to="news_images/")
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -55,7 +56,19 @@ class News(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("news:news_detail", args=[self.slug])
+        return reverse("news:news_detail", kwargs={"slug": self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug and getattr(self, "title", None):
+            base = slugify(self.title) or "news"
+            cand, i = base, 1
+            from .models import News  # yoki yuqorida
+
+            while News.objects.filter(slug=cand).exclude(pk=self.pk).exists():
+                i += 1
+                cand = f"{base}-{i}"
+            self.slug = cand
+        super().save(*args, **kwargs)
 
 
 class Contact(models.Model):
