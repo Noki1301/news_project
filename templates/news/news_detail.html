@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>News detail page</title>
-	</head>
-	<body>
-		<h1>News detail page</h1>
-		<h2>{{ news.title }}</h2>
-		<p>Published time: {{ news.publish_time }}</p>
-		<p>{{ news.body | linebreaks }}</p>
-	</body>
-</html>
+{%extends "news/base.html" %} {% load static %} {% block title %}News detail
+{%endblock title %} {% block content %}
+<body>
+	<h2>{{ news.title }}</h2>
+	<p>Category: {{ news.category }}</p>
+	<img src="{{ news.image.url }}" alt="{{ news.title }}" />
+	<p>Published time: {{ news.publish_time }}</p>
+	<p>{{ news.body | linebreaks }}</p>
+</body>
+{% endblock content %}

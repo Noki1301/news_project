@@ -9,13 +9,13 @@
         <!-- Chap tomondagi katta yangilik -->
         <div class="col-md-6 tn-left">
             <div class="tn-img">
-                <img src="{{ new.image.url }}" alt="{{ new.title }}" />
+                <a href="{{ new.get_absolute_url }}"><img src="{{ new.image.url }}" alt="{{ new.title }}" /></a>
                 <div class="tn-content">
                     <div class="tn-content-inner">
                         <a class="tn-date" href="">
                             <i class="far fa-clock"></i>{{ new.publish_time}}
                         </a>	
-                        <a class="tn-title" href="{% url 'news_detail' new.id %}">
+                        <a class="tn-title" href="{{ new.get_absolute_url}}">
                             {{ new.title }}
                         </a>
                     </div>
@@ -29,13 +29,13 @@
         <!-- O‘ng tomondagi kichik yangiliklar -->
         <div class="col-md-6">
             <div class="tn-img">
-                <img src="{{ new.image.url }}" alt="{{ new.title }}" />
+              <a href="{{ new.get_absolute_url }}"><img src="{{ new.image.url }}" alt="{{ new.title }}" /></a>
                 <div class="tn-content">
                     <div class="tn-content-inner">
                         <a class="tn-date" href="">
                             <i class="far fa-clock"></i>{{ new.publish_time }}
                         </a>
-                        <a class="tn-title" href="{% url 'news_detail' new.id %}">
+                        <a class="tn-title" href="{{ new.get_absolute_url }}">
                             {{ new.title }}
                         </a>
                     </div>
@@ -62,13 +62,13 @@
 					{% for sport in sport_news %}
 					<div class="col-md-6">
 						<div class="cn-img">
-							<img src="{{ sport.image.url }}" alt="{{ sport.title }}" />
+							<a href='{{ sport.get_absolute_url }}'><img src="{{ sport.image.url }}" alt="{{ sport.title }}" /></a>
 							<div class="cn-content">
 								<div class="cn-content-inner">
-									<a class="cn-date" href="{% url 'news_detail' sport.id %}"
+									<a class="cn-date" href="{{ sport.get_absolute_url }}"
 										><i class="far fa-clock"></i>{{ sport.publish_time }}</a
 									>
-									<a class="cn-title" href="{% url 'news_detail' sport.id %}"
+									<a class="cn-title" href="{{ sport.get_absolute_url }}"
 										>{{ sport.title }}</a
 									>
 								</div>
@@ -84,13 +84,13 @@
 					{% for tech in technology_news%}
 					<div class="col-md-6">
 						<div class="cn-img">
-							<img src="{{ tech.image.url }}" alt="{{ tech.title }}" />
+							<a href='{{ tech.get_absolute_url }}'></a><img src="{{ tech.image.url }}" alt="{{ tech.title }}" /></a>
 							<div class="cn-content">
 								<div class="cn-content-inner">
-									<a class="cn-date" href="{% url 'news_detail' tech.id %}"
+									<a class="cn-date" href="{{ tech.get_absolute_url }}"
 										><i class="far fa-clock"></i>{{ tech.publish_time }}</a
 									>
-									<a class="cn-title" href="{% url 'news_detail' tech.id %}">{{ tech.title }}</a>
+									<a class="cn-title" href="{{ tech.get_absolute_url }}">{{ tech.title }}</a>
 								</div>
 							</div>
 						</div>
@@ -113,13 +113,13 @@
 					{% for max in maxalliy_news%}
 					<div class="col-md-6">
 						<div class="cn-img">
-							<img src="{{ max.image.url }}" alt="{{ max.title }}" />
+							<a href="{{ max.get_absolute_url }}"><img src="{{ max.image.url }}" alt="{{ max.title }}" /></a>
 							<div class="cn-content">
 								<div class="cn-content-inner">
-									<a class="cn-date" href="{% url 'news_detail' max.id %}"
+									<a class="cn-date" href="{{ max.get_absolute_url }}"
 										><i class="far fa-clock"></i>{{ max.publish_time }}</a
 									>
-									<a class="cn-title" href="{% url 'news_detail' max.id %}"
+									<a class="cn-title" href="{{ max.get_absolute_url }}"
 										>{{ max.title }}</a
 									>
 								</div>
@@ -136,13 +136,13 @@
 					{% for ext in external_news %}
 					<div class="col-md-6">
 						<div class="cn-img">
-							<img src="{{ ext.image.url }}" alt="{{ ext.title }}" />
+							<a href='{{ ext.get_absolute_url }}'<img src="{{ ext.image.url }}" alt="{{ ext.title }}" /></a>
 							<div class="cn-content">
 								<div class="cn-content-inner">
-									<a class="cn-date" href="{% url 'news_detail' ext.id %}"
+									<a class="cn-date" href="{{ ext.get_absolute_url }}"
 										><i class="far fa-clock"></i>{{ ext.publish_time }}</a
 									>
-									<a class="cn-title" href="{% url 'news_detail' ext.id %}">{{ ext.title }}</a>
+									<a class="cn-title" href="{{ ext.get_absolute_url }}">{{ ext.title }}</a>
 								</div>
 							</div>
 						</div>
@@ -167,10 +167,10 @@
 							{% for new in news %}
 							<div class="col-lg-6">
 								<div class="mn-img">
-									<img src="{{ new.image.url }}" alt="{{ new.title }}" />
+									<a href="{{ new.get_absolute_url }}"><img src="{{ new.image.url }}" alt="{{ new.title }}" /></a>
 								</div>
 								<div class="mn-content">
-									<a class="mn-title" href="{% url 'news_detail' new.id %}"
+									<a class="mn-title" href="{{ new.get_absolute_url }}"
 										>{{ new.title }}</a
 									>
 									<a class="mn-date" href="">
@@ -201,7 +201,7 @@
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 										Vivamus sed porta dui. Class aptent taciti sociosqu ad
 										litora torquent per conubia nostra inceptos...
-									</p>
+									</p> 
 								</div>
 							</div>
 							<div class="col-lg-6">

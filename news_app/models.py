@@ -1,5 +1,6 @@
 from django.utils import timezone
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
@@ -13,6 +14,17 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        if self.name == "Маҳаллий":
+            return reverse("news:mahalliy_news_page")
+        elif self.name == "Хориж":
+            return reverse("news:xorij_news_page")
+        elif self.name == "Технология":
+            return reverse("news:technology_news_page")
+        elif self.name == "Спорт":
+            return reverse("news:sport_news_page")
+        return "#"
 
 
 class News(models.Model):
@@ -41,6 +53,9 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("news:news_detail", args=[self.slug])
 
 
 class Contact(models.Model):

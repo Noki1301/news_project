@@ -1,0 +1,18 @@
+{% extends 'news/base.html'%} {% load static %} {% block title %} Mahalliy
+yangiliklar {% endblock title %} {% block content %} {% for news in mahalliy_yangiliklar %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Mahalliy yangiliklar</h1>
+			<h2><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></h2>
+			<p>Category: {{ news.category }}</p>
+			<a href="{{ news.get_absolute_url }}"
+				><img src="{{ news.image.url }}" alt="{{ news.title }}"
+			/></a>
+			<p>Published time: {{ news.publish_time }}</p>
+			<p>{{ news.body | truncatewords:20 }}</p>
+			<hr />
+		</div>
+	</div>
+</div>
+{% endfor %} {% endblock content %}

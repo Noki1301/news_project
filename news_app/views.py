@@ -15,28 +15,28 @@ def news_list(request):
     return render(request, "news/news_list.html", context=context)
 
 
-def news_detail(request, id):
-    news = get_object_or_404(News, id=id, status=News.Status.Published)
+def news_detail(request, slug):
+    news = get_object_or_404(News, slug=slug, status=News.Status.Published)
     context = {"news": news}
     return render(request, "news/news_detail.html", context=context)
 
 
-def HomePageView(request):
-    news = News.published.all().order_by("-publish_time")[:3]
-    maxalliy_news = News.published.all().filter(category__name="Маҳаллий")[:3]
-    sport_news = News.published.all().filter(category__name="Спорт")[:3]
-    technology_news = News.published.all().filter(category__name="Технология")[:3]
-    external_news = News.published.all().filter(category__name="Хориж")[:3]
-    categories = Category.objects.all()
-    context = {
-        "news": news,
-        "categories": categories,
-        "maxalliy_news": maxalliy_news,
-        "sport_news": sport_news,
-        "technology_news": technology_news,
-        "external_news": external_news,
-    }
-    return render(request, "news/index.html", context=context)
+# def HomePageView(request):
+#     news = News.published.all().order_by("-publish_time")[:3]
+#     maxalliy_news = News.published.all().filter(category__name="Маҳаллий")[:3]
+#     sport_news = News.published.all().filter(category__name="Спорт")[:3]
+#     technology_news = News.published.all().filter(category__name="Технология")[:3]
+#     external_news = News.published.all().filter(category__name="Хориж")[:3]
+#     categories = Category.objects.all()
+#     context = {
+#         "news": news,
+#         "categories": categories,
+#         "maxalliy_news": maxalliy_news,
+#         "sport_news": sport_news,
+#         "technology_news": technology_news,
+#         "external_news": external_news,
+#     }
+#     return render(request, "news/index.html", context=context)
 
 
 class HomePageView(ListView):
@@ -95,3 +95,51 @@ class ContactPageView(TemplateView):
             return redirect("home_page")
         context = {"form": form}
         return render(request, self.template_name, context=context)
+
+
+def home_page(request):
+    return render(request, "index.html")
+
+
+def contact_page(request):
+    return render(request, "contact.html")
+
+
+class LocalNewsView(ListView):
+    model = News
+    template_name = "news/mahalliy.html"
+    context_object_name = "mahalliy_yangiliklar"
+
+    def get_queryset(self):
+        news = self.model.published.all().filter(category__name="Маҳаллий")
+        return news
+
+
+class XorijNewsView(ListView):
+    model = News
+    template_name = "news/xorij.html"
+    context_object_name = "xorij_yangiliklar"
+
+    def get_queryset(self):
+        news = self.model.published.all().filter(category__name="Хориж")
+        return news
+
+
+class TechnologyNewsView(ListView):
+    model = News
+    template_name = "news/technologiya.html"
+    context_object_name = "technologiya_yangiliklar"
+
+    def get_queryset(self):
+        news = self.model.published.all().filter(category__name="Технология")
+        return news
+
+
+class SportNewsView(ListView):
+    model = News
+    template_name = "news/sport.html"
+    context_object_name = "sport_yangiliklar"
+
+    def get_queryset(self):
+        news = self.model.published.all().filter(category__name="Спорт")
+        return news
