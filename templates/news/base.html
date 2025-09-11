@@ -40,35 +40,93 @@
 
 	<body>
 		<!-- Top Header Start -->
-		<div class="top-header">
+		<!-- Top Header -->
+		<div class="top-header py-2 border-bottom">
 			<div class="container">
 				<div class="row align-items-center">
+					<!-- Logo -->
 					<div class="col-lg-3 col-md-4">
-						<div class="logo">
-							<a href="{{ home_url }}">
-								<img src="{% static 'images/logo.png' %}" alt="Logo" />
-							</a>
-						</div>
+						<a href="{{ home_url }}" class="d-inline-block">
+							<img
+								src="{% static 'images/logo.png' %}"
+								alt="Logo"
+								class="img-fluid"
+								style="max-height: 42px"
+							/>
+						</a>
 					</div>
-					<div class="col-lg-6 col-md-4">
-						<div class="search">
-							<input type="text" placeholder="Search" />
-							<button><i class="fa fa-search"></i></button>
-						</div>
+
+					<!-- Search (ixtiyoriy: action va name qo'ying) -->
+					<div class="col-lg-6 d-none d-md-block">
+						<form class="d-flex" action="" method="get">
+							<input
+								class="form-control"
+								type="text"
+								name="q"
+								placeholder="Search"
+							/>
+							<button class="btn btn-primary ml-2" type="submit">
+								<i class="fa fa-search"></i>
+							</button>
+						</form>
 					</div>
-					<div class="col-lg-3 col-md-4">
-						<p>{% now 'jS F Y D H:i' %}</p>
-						<div class="social">
-							<a href=""><i class="fab fa-twitter"></i></a>
-							<a href=""><i class="fab fa-facebook"></i></a>
-							<a href=""><i class="fab fa-linkedin"></i></a>
-							<a href=""><i class="fab fa-instagram"></i></a>
-							<a href=""><i class="fab fa-youtube"></i></a>
+
+					<!-- Sana + Auth + Social -->
+					<div class="col-lg-3 col-md-8">
+						<div class="d-flex flex-column align-items-end text-lg-right">
+							<p class="mb-2 small text-muted">{% now 'jS F Y D H:i' %}</p>
+
+							<!-- Login / Logout -->
+							<div class="d-flex align-items-center mb-2">
+								{% if user.is_authenticated %}
+								<span class="small">Welcome, {{ user.username }}</span>
+								<a href="{% url 'user_profile' %}" class="small ml-2"
+									>Profile</a
+								>
+								<form
+									action="{% url 'logout' %}"
+									method="post"
+									class="d-inline ml-2"
+								>
+									{% csrf_token %}
+									<button type="submit" class="btn btn-sm btn-outline-danger">
+										<i class="fa fa-sign-out"></i> Logout
+									</button>
+								</form>
+								{% else %}
+								<a
+									href="{% url 'login' %}"
+									class="btn btn-sm btn-outline-primary"
+								>
+									<i class="fa fa-sign-in"></i> Login
+								</a>
+								{% endif %}
+							</div>
+
+							<!-- Social -->
+							<div class="social">
+								<a href="#" class="text-muted mr-2"
+									><i class="fab fa-twitter"></i
+								></a>
+								<a href="#" class="text-muted mr-2"
+									><i class="fab fa-facebook"></i
+								></a>
+								<a href="#" class="text-muted mr-2"
+									><i class="fab fa-linkedin"></i
+								></a>
+								<a href="#" class="text-muted mr-2"
+									><i class="fab fa-instagram"></i
+								></a>
+								<a href="#" class="text-muted"
+									><i class="fab fa-youtube"></i
+								></a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		{% if messages %}
 		<div class="container mt-3">
 			{% for message in messages %}
@@ -86,9 +144,8 @@
 			{% endfor %}
 		</div>
 		{% endif %}
-		<!-- Top Header End -->
 
-		<!-- Header Start -->
+		<!-- Header / Nav -->
 		<div class="header">
 			<div class="container">
 				<nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -107,7 +164,7 @@
 						id="navbarCollapse"
 					>
 						<div class="navbar-nav m-auto">
-							<a href="{{  home_url  }}" class="nav-item nav-link active"
+							<a href="{{ home_url }}" class="nav-item nav-link active"
 								>Bosh sahifa</a
 							>
 							<a
@@ -130,8 +187,7 @@
 								class="nav-item nav-link"
 								>Спорт</a
 							>
-
-							<a href="" class="nav-item nav-link">Single Page</a>
+							<a href="#" class="nav-item nav-link">Single Page</a>
 							<a href="{{ contact_url }}" class="nav-item nav-link"
 								>Contact Us</a
 							>
@@ -140,6 +196,7 @@
 				</nav>
 			</div>
 		</div>
+
 		<!-- Header End -->
 		{% block content %} {% endblock %}
 		<!-- Footer Start -->
