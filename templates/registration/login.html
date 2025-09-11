@@ -4,6 +4,7 @@
 <div class="container">
 	<h1 class="text-center">Login sahifasi</h1>
 	<p class="text-center">Iltimos, login va parolingizni kiriting</p>
+	<h5>Agar parolingizni unutgan bo'lsangiz,parolingizni <a href='{% url 'password_reset' %}'>tiklang</a></h5>
 	<form method="post">
 		{% csrf_token %} {{ form.as_p }}
 		<button type="submit" class="btn btn-primary">Login</button>

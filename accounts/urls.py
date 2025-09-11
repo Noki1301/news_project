@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import user_login
+from .views import user_login, user_register
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
@@ -11,9 +11,11 @@ from django.contrib.auth.views import (
     PasswordResetCompleteView,
 )
 from .views import user_login, dashboard_view
+from .forms import CustomAuthForm
+
 
 urlpatterns = [
-    path("login/", LoginView.as_view(), name="login"),
+    path("login/", LoginView.as_view(authentication_form=CustomAuthForm), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("password_change/", PasswordChangeView.as_view(), name="password_change"),
     path(
@@ -42,4 +44,5 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     path("profile/", dashboard_view, name="user_profile"),
+    path("singup/", user_register, name="user_register"),
 ]
