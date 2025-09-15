@@ -1,105 +1,69 @@
-{% extends "news/base.html" %} {% load static %} {% block title %}Home - News
-24{% endblock title %} {% block content %}
+{% extends "news/base.html" %} {% load static %} {% load hitcount_tags %} 
+{% block title %}Home - News24{% endblock title %} {% block content %}  
+{% with placeholder='images/placeholder.jpg' %}
 
-<!-- Top News Start-->
+<!-- ========== Top News ========== -->
 <div class="top-news py-4">
 	<div class="container-fluid">
+		{% if news %} {% with lead=news|first others=news|slice:"1:" %}
 		<div class="row">
-			{% for new in news %} {% if forloop.first %}
-			<!-- Chap tomondagi katta yangilik -->
+			<!-- Chapdagi katta yangilik (lead) -->
 			<div class="col-md-6 tn-left mb-4">
 				<div class="card border-0 shadow-sm h-100">
 					<div class="tn-img">
-						<a href="{{ new.get_absolute_url }}">
+						<a href="{{ lead.get_absolute_url }}">
 							<img
-								src="{{ new.image.url }}"
-								alt="{{ new.title }}"
+								src="{% if lead.image %}{{ lead.image.url }}{% else %}{% static placeholder %}{% endif %}"
+								alt="{{ lead.title|default:'News' }}"
 								class="card-img-top rounded"
 							/>
 						</a>
 					</div>
 					<div class="card-body">
-						<a class="tn-date text-muted small d-block mb-2" href="">
-							<i class="far fa-clock"></i> {{ new.publish_time }}
-						</a>
+						<time class="tn-date text-muted small d-block mb-2">
+							<i class="far fa-clock"></i> {{ lead.publish_time|date:"M d, Y H:i" }}
+						</time>
 						<a
 							class="tn-title fw-bold h4 text-dark text-decoration-none d-block mb-2"
-							href="{{ new.get_absolute_url }}"
+							href="{{ lead.get_absolute_url }}"
 						>
-							{{ new.title }}
+							{{ lead.title }}
 						</a>
 						<p class="text-secondary small mb-0">
-							{{ new.body|truncatewords:25 }}
+							{{ lead.body|truncatewords:25 }}
 						</p>
 					</div>
 				</div>
 			</div>
 
-			<!-- O‘ng tomonni ochamiz -->
+			<!-- O‘ng tomondagi kichik yangiliklar -->
 			<div class="col-md-6 tn-right">
 				<div class="row">
-					{% else %}
-					<!-- O‘ng tomondagi kichik yangiliklar -->
+					{% for new in others %}
 					<div class="col-md-6 mb-4">
 						<div class="card border-0 shadow-sm h-100">
 							<div class="tn-img">
 								<a href="{{ new.get_absolute_url }}">
 									<img
-										src="{{ new.image.url }}"
-										alt="{{ new.title }}"
+										src="{% if new.image %}{{ new.image.url }}{% else %}{% static placeholder %}{% endif %}"
+										alt="{{ new.title|default:'News' }}"
 										class="card-img-top rounded"
 									/>
 								</a>
 							</div>
 							<div class="card-body p-3">
-								<a class="tn-date text-muted small d-block mb-2" href="">
-									<i class="far fa-clock"></i> {{ new.publish_time }}
-								</a>
+								<time class="text-muted small d-block mb-2">
+									<i class="far fa-clock"></i> {{ new.publish_time|date:"M d, Y	H:i" }}
+								</time>
 								<a
 									class="tn-title fw-bold h6 text-dark text-decoration-none d-block"
 									href="{{ new.get_absolute_url }}"
 								>
 									{{ new.title }}
-								</a>
-							</div>
-						</div>
-					</div>
-					{% endif %} {% endfor %}
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Top News End-->
-
-<!-- Category News Start-->
-<div class="cat-news py-5 bg-light">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-6 mb-4">
-				<h2 class="fw-bold mb-3">
-					<i class="fas fa-align-justify"></i> Sport Habarlari
-				</h2>
-				<div class="row cn-slider">
-					{% for sport in sport_news %}
-					<div class="col-md-6 mb-3">
-						<div class="card border-0 shadow-sm h-100">
-							<a href="{{ sport.get_absolute_url }}">
-								<img
-									src="{{ sport.image.url }}"
-									alt="{{ sport.title }}"
-									class="card-img-top rounded"
-								/>
-							</a>
-							<div class="card-body p-2">
-								<a class="cn-date text-muted small d-block mb-1" href="">
-									<i class="far fa-clock"></i> {{ sport.publish_time }}
-								</a>
-								<a
-									class="cn-title fw-bold text-dark text-decoration-none d-block"
-									href="{{ sport.get_absolute_url }}"
-								>
-									{{ sport.title }}
+									<div class="news-views">
+										{% get_hit_count for new as total_hits %}
+										<i class="fa fa-eye"></i> {{ total_hits }}
+									</div>
 								</a>
 							</div>
 						</div>
@@ -107,7 +71,58 @@
 					{% endfor %}
 				</div>
 			</div>
+		</div>
+		{% endwith %} {% else %}
+		<div class="text-center text-muted py-5">Hozircha yangiliklar yo‘q.</div>
+		{% endif %}
+	</div>
+</div>
+<!-- /Top News -->
 
+<!-- ========== Category: Sport & Texnologiya ========== -->
+<div class="cat-news py-5 bg-light">
+	<div class="container-fluid">
+		<div class="row">
+			<!-- Sport -->
+			<div class="col-md-6 mb-4">
+				<h2 class="fw-bold mb-3">
+					<i class="fas fa-align-justify"></i> Sport xabarlari
+				</h2>
+				<div class="row cn-slider">
+					{% for sport in sport_news %}
+					<div class="col-md-6 mb-3">
+						<div class="card border-0 shadow-sm h-100">
+							<a href="{{ sport.get_absolute_url }}">
+								<img
+									src="{% if sport.image %}{{ sport.image.url }}{% else %}{% static placeholder %}{% endif %}"
+									alt="{{ sport.title|default:'Sport' }}"
+									class="card-img-top rounded"
+								/>
+							</a>
+							<div class="card-body p-2">
+								<time class="text-muted small d-block mb-1">
+									<i class="far fa-clock"></i> {{ sport.publish_time|date:"M d,Y H:i" }}
+								</time>
+								<a
+									class="fw-bold text-dark text-decoration-none d-block"
+									href="{{ sport.get_absolute_url }}"
+								>
+									{{ sport.title }}
+									<div class="news-views">
+										{% get_hit_count for sport as total_hits %}
+										<i class="fa fa-eye"></i> {{ total_hits }}
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					{% empty %}
+					<div class="col-12 text-muted">Sport bo‘limida yangilik yo‘q.</div>
+					{% endfor %}
+				</div>
+			</div>
+
+			<!-- Texnologiya -->
 			<div class="col-md-6 mb-4">
 				<h2 class="fw-bold mb-3">
 					<i class="fas fa-align-justify"></i> Texnologiya
@@ -118,23 +133,31 @@
 						<div class="card border-0 shadow-sm h-100">
 							<a href="{{ tech.get_absolute_url }}">
 								<img
-									src="{{ tech.image.url }}"
-									alt="{{ tech.title }}"
+									src="{% if tech.image %}{{ tech.image.url }}{% else %}{% static placeholder %}{% endif %}"
+									alt="{{ tech.title|default:'Texnologiya' }}"
 									class="card-img-top rounded"
 								/>
 							</a>
 							<div class="card-body p-2">
-								<a class="cn-date text-muted small d-block mb-1" href="">
-									<i class="far fa-clock"></i> {{ tech.publish_time }}
-								</a>
+								<time class="text-muted small d-block mb-1">
+									<i class="far fa-clock"></i> {{ tech.publish_time|date:"M d, Y H:i" }}
+								</time>
 								<a
-									class="cn-title fw-bold text-dark text-decoration-none d-block"
+									class="fw-bold text-dark text-decoration-none d-block"
 									href="{{ tech.get_absolute_url }}"
 								>
 									{{ tech.title }}
+									<div class="news-views">
+										{% get_hit_count for tech as total_hits %}
+										<i class="fa fa-eye"></i> {{ total_hits }}
+									</div>
 								</a>
 							</div>
 						</div>
+					</div>
+					{% empty %}
+					<div class="col-12 text-muted">
+						Texnologiya bo‘limida yangilik yo‘q.
 					</div>
 					{% endfor %}
 				</div>
@@ -142,12 +165,12 @@
 		</div>
 	</div>
 </div>
-<!-- Category News End-->
 
-<!-- Category News 2 Start-->
+<!-- ========== Category: Mahalliy & Xorij ========== -->
 <div class="cat-news py-5">
 	<div class="container-fluid">
 		<div class="row">
+			<!-- Mahalliy -->
 			<div class="col-md-6 mb-4">
 				<h2 class="fw-bold mb-3">
 					<i class="fas fa-align-justify"></i> Маҳаллий
@@ -158,28 +181,35 @@
 						<div class="card border-0 shadow-sm h-100">
 							<a href="{{ max.get_absolute_url }}">
 								<img
-									src="{{ max.image.url }}"
-									alt="{{ max.title }}"
+									src="{% if max.image %}{{ max.image.url }}{% else %}{% static placeholder %}{% endif %}"
+									alt="{{ max.title|default:'Mahalliy' }}"
 									class="card-img-top rounded"
 								/>
 							</a>
 							<div class="card-body p-2">
-								<a class="cn-date text-muted small d-block mb-1" href="">
-									<i class="far fa-clock"></i> {{ max.publish_time }}
-								</a>
+								<time class="text-muted small d-block mb-1">
+									<i class="far fa-clock"></i> {{ max.publish_time|date:"M d, Y	H:i" }}
+								</time>
 								<a
-									class="cn-title fw-bold text-dark text-decoration-none d-block"
+									class="fw-bold text-dark text-decoration-none d-block"
 									href="{{ max.get_absolute_url }}"
 								>
 									{{ max.title }}
+									<div class="news-views">
+										{% get_hit_count for max as total_hits %}
+										<i class="fa fa-eye"></i> {{ total_hits }}
+									</div>
 								</a>
 							</div>
 						</div>
 					</div>
+					{% empty %}
+					<div class="col-12 text-muted">Mahalliy yangiliklar yo‘q.</div>
 					{% endfor %}
 				</div>
 			</div>
 
+			<!-- Xorij -->
 			<div class="col-md-6 mb-4">
 				<h2 class="fw-bold mb-3">
 					<i class="fas fa-align-justify"></i> Xorij yangiliklari
@@ -190,41 +220,48 @@
 						<div class="card border-0 shadow-sm h-100">
 							<a href="{{ ext.get_absolute_url }}">
 								<img
-									src="{{ ext.image.url }}"
-									alt="{{ ext.title }}"
+									src="{% if ext.image %}{{ ext.image.url }}{% else %}{% static placeholder %}{% endif %}"
+									alt="{{ ext.title|default:'Xorij' }}"
 									class="card-img-top rounded"
 								/>
 							</a>
 							<div class="card-body p-2">
-								<a class="cn-date text-muted small d-block mb-1" href="">
-									<i class="far fa-clock"></i> {{ ext.publish_time }}
-								</a>
+								<time class="text-muted small d-block mb-1">
+									<i class="far fa-clock"></i> {{ ext.publish_time|date:"M d, Y	H:i" }}
+								</time>
 								<a
-									class="cn-title fw-bold text-dark text-decoration-none d-block"
+									class="fw-bold text-dark text-decoration-none d-block"
 									href="{{ ext.get_absolute_url }}"
 								>
 									{{ ext.title }}
+									<div class="news-views">
+										{% get_hit_count for ext as total_hits %}
+										<i class="fa fa-eye"></i> {{ total_hits }}
+									</div>
 								</a>
 							</div>
 						</div>
 					</div>
+					{% empty %}
+					<div class="col-12 text-muted">Xorij bo‘limida yangilik yo‘q.</div>
 					{% endfor %}
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- Category News 2 End-->
 
-<!-- Main News Start-->
+<!-- ========== Main News + Sidebar ========== -->
 <div class="main-news py-5 bg-light">
 	<div class="container-fluid">
 		<div class="row">
+			<!-- Main list -->
 			<div class="col-md-8">
 				<div class="row">
+					<!-- So'nggi yangiliklar -->
 					<div class="col-md-12 mb-4">
 						<h2 class="fw-bold mb-3">
-							<i class="fas fa-align-justify"></i> So'nggi Yangiliklar
+							<i class="fas fa-align-justify"></i> So‘nggi yangiliklar
 						</h2>
 						<div class="row">
 							{% for new in news %}
@@ -232,8 +269,8 @@
 								<div class="card border-0 shadow-sm h-100">
 									<a href="{{ new.get_absolute_url }}">
 										<img
-											src="{{ new.image.url }}"
-											alt="{{ new.title }}"
+											src="{% if new.image %}{{ new.image.url }}{% else %}{% static placeholder %}{% endif %}"
+											alt="{{ new.title|default:'News' }}"
 											class="card-img-top rounded"
 										/>
 									</a>
@@ -243,21 +280,27 @@
 											href="{{ new.get_absolute_url }}"
 										>
 											{{ new.title }}
+											<div class="news-views">
+												{% get_hit_count for new as total_hits %}
+												<i class="fa fa-eye"></i> {{ total_hits }}
+											</div>
 										</a>
-										<a class="mn-date text-muted small d-block mb-2" href="">
-											<i class="far fa-clock"></i> {{ new.publish_time }}
-										</a>
+										<time class="mn-date text-muted small d-block mb-2">
+											<i class="far fa-clock"></i> {{ new.publish_time|date:"M d, Y H:i" }}
+										</time>
 										<p class="text-secondary small">
 											{{ new.body|truncatewords:20 }}
 										</p>
 									</div>
 								</div>
 							</div>
+							{% empty %}
+							<div class="col-12 text-muted">Hozircha yangiliklar yo‘q.</div>
 							{% endfor %}
 						</div>
 					</div>
 
-					<!-- Ommabop habarlar -->
+					<!-- Ommabop habarlar (static demo) -->
 					<div class="col-md-12 mb-4">
 						<h2 class="fw-bold mb-3">
 							<i class="fas fa-align-justify"></i> Ommabop habarlar
@@ -268,97 +311,42 @@
 									<img
 										src="{% static 'images/popular-news.jpg' %}"
 										class="card-img-top rounded"
+										alt="Popular"
 									/>
 									<div class="card-body">
-										<a class="fw-bold d-block mb-2 text-dark" href=""
+										<a class="fw-bold d-block mb-2 text-dark" href="#"
 											>Phasellus gravida metus vitae laoreet aliquam</a
 										>
-										<a class="text-muted small d-block mb-2" href=""
-											><i class="far fa-clock"></i> 05-Feb-2020</a
+										<span class="text-muted small d-block mb-2"
+											><i class="far fa-clock"></i> 05-Feb-2020</span
 										>
-										<p class="text-secondary small">
+										<p class="text-secondary small mb-0">
 											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 											Vivamus sed porta dui...
 										</p>
 									</div>
 								</div>
 							</div>
+
 							<div class="col-lg-6">
+								{% for i in "12345" %}
 								<div class="mn-list d-flex mb-3">
 									<img
 										src="{% static 'images/popular-news.jpg' %}"
-										class="rounded shadow-sm me-3"
+										class="rounded shadow-sm mr-3"
 										width="80"
+										alt="Popular"
 									/>
 									<div>
-										<a class="fw-bold d-block text-dark" href=""
-											>Nullam risus ante sempe</a
+										<a class="fw-bold d-block text-dark" href="#"
+											>Demo popular news title {{ forloop.counter }}</a
 										>
-										<a class="text-muted small" href=""
-											><i class="far fa-clock"></i> 05-Feb-2020</a
+										<span class="text-muted small"
+											><i class="far fa-clock"></i> 05-Feb-2020</span
 										>
 									</div>
 								</div>
-								<div class="mn-list d-flex mb-3">
-									<img
-										src="{% static 'images/popular-news.jpg' %}"
-										class="rounded shadow-sm me-3"
-										width="80"
-									/>
-									<div>
-										<a class="fw-bold d-block text-dark" href=""
-											>Pellentesque ultrices quam id ipsum tempor</a
-										>
-										<a class="text-muted small" href=""
-											><i class="far fa-clock"></i> 05-Feb-2020</a
-										>
-									</div>
-								</div>
-								<div class="mn-list d-flex mb-3">
-									<img
-										src="{% static 'images/popular-news.jpg' %}"
-										class="rounded shadow-sm me-3"
-										width="80"
-									/>
-									<div>
-										<a class="fw-bold d-block text-dark" href=""
-											>Nam ex magna, commodo sed turpis rutrum</a
-										>
-										<a class="text-muted small" href=""
-											><i class="far fa-clock"></i> 05-Feb-2020</a
-										>
-									</div>
-								</div>
-								<div class="mn-list d-flex mb-3">
-									<img
-										src="{% static 'images/popular-news.jpg' %}"
-										class="rounded shadow-sm me-3"
-										width="80"
-									/>
-									<div>
-										<a class="fw-bold d-block text-dark" href=""
-											>Aliquam condimentum metus</a
-										>
-										<a class="text-muted small" href=""
-											><i class="far fa-clock"></i> 05-Feb-2020</a
-										>
-									</div>
-								</div>
-								<div class="mn-list d-flex">
-									<img
-										src="{% static 'images/popular-news.jpg' %}"
-										class="rounded shadow-sm me-3"
-										width="80"
-									/>
-									<div>
-										<a class="fw-bold d-block text-dark" href=""
-											>Ut ornare rutrum ligula erat volutpat</a
-										>
-										<a class="text-muted small" href=""
-											><i class="far fa-clock"></i> 05-Feb-2020</a
-										>
-									</div>
-								</div>
+								{% endfor %}
 							</div>
 						</div>
 					</div>
@@ -368,51 +356,60 @@
 			<!-- Sidebar -->
 			<div class="col-md-4">
 				<div class="sidebar">
+					<!-- Categories -->
 					<div class="sidebar-widget mb-4">
 						<h2 class="fw-bold mb-3">
 							<i class="fas fa-align-justify"></i> Category
 						</h2>
 						<div class="category">
-							<ul class="fa-ul">
+							<ul class="fa-ul mb-0">
 								{% for category in categories %}
 								<li>
 									<span class="fa-li"
 										><i class="far fa-arrow-alt-circle-right"></i
 									></span>
-									<a href="" class="text-dark">{{ category.name }}</a>
+									<a href="#" class="text-dark">{{ category.name }}</a>
 								</li>
+								{% empty %}
+								<li class="text-muted">Kategoriya yo‘q.</li>
 								{% endfor %}
 							</ul>
 						</div>
 					</div>
 
+					<!-- Tags -->
 					<div class="sidebar-widget mb-4">
 						<h2 class="fw-bold mb-3">
 							<i class="fas fa-align-justify"></i> Tags
 						</h2>
 						<div class="tags">
 							{% for category in categories %}
-							<a href="" class="badge bg-light text-dark border me-1"
+							<a href="#" class="badge bg-light text-dark border mr-1"
 								>{{ category.name }}</a
 							>
+							{% empty %}
+							<span class="text-muted">Teglar yo‘q.</span>
 							{% endfor %}
 						</div>
 					</div>
 
+					<!-- Ads 1 col -->
 					<div class="sidebar-widget mb-4">
 						<h2 class="fw-bold mb-3">
 							<i class="fas fa-align-justify"></i> Ads 1 column
 						</h2>
 						<div class="image">
-							<a href=""
-								><img
+							<a href="#">
+								<img
 									src="{% static 'images/adds-1.jpg' %}"
-									alt="Image"
+									alt="Ad"
 									class="img-fluid rounded shadow-sm"
-							/></a>
+								/>
+							</a>
 						</div>
 					</div>
 
+					<!-- Ads 2 col -->
 					<div class="sidebar-widget">
 						<h2 class="fw-bold mb-3">
 							<i class="fas fa-align-justify"></i> Ads 2 column
@@ -420,18 +417,18 @@
 						<div class="image">
 							<div class="row">
 								<div class="col-sm-6 mb-3">
-									<a href=""
+									<a href="#"
 										><img
 											src="{% static 'images/adds-2.jpg' %}"
-											alt="Image"
+											alt="Ad"
 											class="img-fluid rounded shadow-sm"
 									/></a>
 								</div>
 								<div class="col-sm-6 mb-3">
-									<a href=""
+									<a href="#"
 										><img
 											src="{% static 'images/adds-2.jpg' %}"
-											alt="Image"
+											alt="Ad"
 											class="img-fluid rounded shadow-sm"
 									/></a>
 								</div>
@@ -440,19 +437,18 @@
 					</div>
 				</div>
 			</div>
-			<!-- Sidebar End -->
+			<!-- /Sidebar -->
 		</div>
 	</div>
 </div>
-<!-- Main News End-->
+<!-- /Main News -->
 
-{% block js %}
-<!-- JavaScript Libraries -->
+{% endwith %} {% block js %}
+<!-- JS kutubxonalar -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <script src="{% static 'lib/easing/easing.min.js' %}"></script>
 <script src="{% static 'lib/slick/slick.min.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/js/all.min.js"></script>
-<!-- Template Javascript -->
 <script src="{% static 'js/main.js' %}"></script>
 {% endblock js %} {% endblock content %}

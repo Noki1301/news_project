@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from .models import Profile
 
 
 class UserLoginForm(forms.Form):
@@ -37,3 +38,24 @@ class UserRegisterForm(forms.ModelForm):
         if data["password"] != data["password_2"]:
             raise forms.ValidationError("Kiritgan parollaringiz bir biriga mos emas!")
         return data["password_2"]
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "email"]
+        widgets = {
+            "first_name": forms.TextInput(attrs={"class": "form-control"}),
+            "last_name": forms.TextInput(attrs={"class": "form-control"}),
+            "email": forms.TextInput(attrs={"class": "form-control"}),
+        }
+
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ["photo", "date_of_birth"]
+        widgets = {
+            "photo": forms.FileInput(attrs={"class": "form-control"}),
+            "date_of_birth": forms.DateInput(attrs={"class": "form-control"}),
+        }

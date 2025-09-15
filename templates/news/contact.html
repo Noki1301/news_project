@@ -1,5 +1,5 @@
-{% extends "news/base.html" %} {% load static %} {% block title %}Contact -
-News24{% endblock title %} {% block content %}
+{% extends "news/base.html" %} {% load static %} {% block title %} Contact -
+News24 {% endblock title %} {% block content %}
 
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
@@ -16,6 +16,7 @@ News24{% endblock title %} {% block content %}
 <div class="contact">
 	<div class="container-fluid">
 		<div class="row align-items-center">
+			<!-- Contact Form -->
 			<div class="col-md-4">
 				<div class="form">
 					<form method="POST">
@@ -27,6 +28,7 @@ News24{% endblock title %} {% block content %}
 									class="form-control"
 									placeholder="Your Name"
 									name="name"
+									required
 								/>
 							</div>
 							<div class="form-group col-md-6">
@@ -35,6 +37,7 @@ News24{% endblock title %} {% block content %}
 									class="form-control"
 									placeholder="Your Email"
 									name="email"
+									required
 								/>
 							</div>
 						</div>
@@ -44,6 +47,7 @@ News24{% endblock title %} {% block content %}
 								class="form-control"
 								placeholder="Subject"
 								name="subject"
+								required
 							/>
 						</div>
 						<div class="form-group">
@@ -52,41 +56,52 @@ News24{% endblock title %} {% block content %}
 								rows="5"
 								placeholder="Message"
 								name="message"
+								required
 							></textarea>
 						</div>
 						<div>
-							<button class="btn" type="submit">Habar Yuborish</button>
+							<button class="btn btn-primary" type="submit">
+								Xabar yuborish
+							</button>
 						</div>
 					</form>
 				</div>
 			</div>
+
+			<!-- Map -->
 			<div class="col-md-4">
 				<div class="map">
 					<iframe
 						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3020.985767636229!2d-73.52689268518203!3d40.78432704112558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c281127307115f%3A0x90d5abaf2f0279de!2sTerry%20Ln%2C%20Jericho%2C%20NY%2011753%2C%20USA!5e0!3m2!1sen!2sbd!4v1580837516748!5m2!1sen!2sbd"
 						frameborder="0"
-						style="border: 0"
+						style="border: 0; width: 100%; height: 300px"
 						allowfullscreen=""
-					></iframe>
+						aria-hidden="false"
+						tabindex="0"
+					>
+					</iframe>
 				</div>
 			</div>
+
+			<!-- Contact Info -->
 			<div class="col-md-4">
 				<div class="contact-info">
-					<h3>Get in Touch</h3>
+					<h3>Bog‘lanish</h3>
 					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-						condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at
-						dignissim lorem tempor in. Vivamus tempor hendrerit finibus.
+						Biz bilan bog‘lanish uchun quyidagi ma’lumotlardan foydalanishingiz
+						mumkin.
 					</p>
-					<h4><i class="fa fa-map-marker"></i>123 Terry Lane, New York, USA</h4>
-					<h4><i class="fa fa-envelope"></i>email@example.com</h4>
-					<h4><i class="fa fa-phone"></i>+123-456-7890</h4>
+					<h4>
+						<i class="fa fa-map-marker"></i> 123 Terry Lane, New York, USA
+					</h4>
+					<h4><i class="fa fa-envelope"></i> email@example.com</h4>
+					<h4><i class="fa fa-phone"></i> +123-456-7890</h4>
 					<div class="social">
-						<a href=""><i class="fab fa-twitter"></i></a>
-						<a href=""><i class="fab fa-facebook"></i></a>
-						<a href=""><i class="fab fa-linkedin"></i></a>
-						<a href=""><i class="fab fa-instagram"></i></a>
-						<a href=""><i class="fab fa-youtube"></i></a>
+						<a href="#"><i class="fab fa-twitter"></i></a>
+						<a href="#"><i class="fab fa-facebook"></i></a>
+						<a href="#"><i class="fab fa-linkedin"></i></a>
+						<a href="#"><i class="fab fa-instagram"></i></a>
+						<a href="#"><i class="fab fa-youtube"></i></a>
 					</div>
 				</div>
 			</div>
@@ -94,7 +109,8 @@ News24{% endblock title %} {% block content %}
 	</div>
 </div>
 <!-- Contact End -->
-{% block js %}
+
+{% endblock content %} {% block js %}
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -104,5 +120,3 @@ News24{% endblock title %} {% block content %}
 <!-- Template Javascript -->
 <script src="{% static 'js/main.js' %}"></script>
 {% endblock js %}
-<!-- Footer Start -->
-{% endblock content %}

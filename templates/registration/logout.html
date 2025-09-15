@@ -1,9 +1,24 @@
 {% extends 'news/base.html'%} {% load static %} {% block title %} Logout
 sahifasi {% endblock title %} {% block content %}
-
-<div class="container">
-	<h1 class="text-center">Logout sahifasi</h1>
-	<p class="text-center">Siz websaytdan chiq. <a href='{% url 'login' %}'>Login</a> sahifasiga o'ting.</p>
+<div
+	class="container d-flex justify-content-center align-items-center"
+	style="min-height: 80vh"
+>
+	<div class="col-md-6">
+		<div class="card shadow-lg border-0 rounded-3 text-center">
+			<div class="card-header bg-danger text-white">
+				<h4 class="mb-0">Tizimdan chiqdingiz</h4>
+			</div>
+			<div class="card-body">
+				<p class="mb-3">
+					Siz tizimdan muvaffaqiyatli chiqdingiz. Agar qayta kirishni
+					xohlasangiz, quyidagi tugmani bosing:
+				</p>
+				<a href="{% url 'login' %}" class="btn btn-primary">
+					🔑 Qayta kirish
+				</a>
+			</div>
+		</div>
+	</div>
 </div>
-
 {% endblock content %}

@@ -1,14 +1,35 @@
 {% extends 'news/base.html' %} {% load static %} {% block title %}
-Foydalanuvchilarni ruyhatdan o'tkazish {% endblock title %} {% block content %}
-<div class="container">
-	<h1>Yangi foydalanuvchi ro'yxatdan o'tkazish</h1>
-	<p>
-		Yangi foydalanuvchi ro'yxatdan o'tkazish uchun quyidagi ma'lumotlarni
-		kiriting.
-	</p>
-	<form method="post">
-		{% csrf_token %} {{ user_form.as_p }}
-		<button type="submit" class="btn btn-primary">Ro'yxatdan o'tish</button>
-	</form>
+Foydalanuvchilarni ro'yxatdan o'tkazish {% endblock title %} {% block content %}
+<div
+	class="container d-flex justify-content-center align-items-center"
+	style="min-height: 80vh"
+>
+	<div class="col-md-6">
+		<div class="card shadow-lg border-0 rounded-3">
+			<div class="card-header bg-primary text-white text-center">
+				<h4 class="mb-0">Yangi foydalanuvchi ro'yxatdan o'tishi</h4>
+			</div>
+			<div class="card-body">
+				<p class="text-muted text-center">
+					Iltimos, quyidagi ma'lumotlarni to'ldiring.
+				</p>
+				<form method="post">
+					{% csrf_token %}
+					<div class="mb-3">{{ user_form.as_p }}</div>
+					<div class="d-grid">
+						<button type="submit" class="btn btn-success">
+							📝 Ro'yxatdan o'tish
+						</button>
+					</div>
+				</form>
+			</div>
+			<div class="card-footer text-center">
+				<small>
+					Allaqachon akkountingiz bormi?
+					<a href="{% url 'login' %}" class="text-primary">Kirish</a>
+				</small>
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock content %}

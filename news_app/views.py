@@ -1,8 +1,9 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import News, Category
 from django.shortcuts import get_object_or_404
-from .forms import ContactForm
+from .forms import ContactForm, CommentForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -13,6 +14,14 @@ from django.views.generic import (
     CreateView,
     DetailView,
 )
+from hitcount.models import HitCount
+from hitcount.utils import get_hitcount_model
+from hitcount.views import HitCountDetailView, HitCountMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from news_app.custom_permissions import OnlyLoggedSuperUser
+from django.contrib.auth.models import User
+from django.conf import settings
+from django.db.models import Q
 
 # Create your views here.
 
@@ -25,10 +34,58 @@ def news_list(request):
 
 def news_detail(request, slug):
     news = get_object_or_404(News, slug=slug, status=News.Status.Published)
-    context = {"news": news}
+    comments = news.comments.filter(active=True)
+    comments.count = comments.count()
+    # news.view_count = (news.view_count or 0) + 1
+    # news.save(update_fields=["view_count"])
+    context = {}
+    # hitcountlogic
+    hit_count = get_hitcount_model().objects.get_for_object(news)
+    hits = hit_count.hits
+    hitcount_context = {
+        "hitcount": {"pk": hit_count.pk},
+        "total_hits": hits,
+    }
+
+    hit_count_response = HitCountMixin.hit_count(request, hit_count)
+    if hit_count_response.hit_counted:
+        hitcount_context["hit_counted"] = hit_count_response.hit_counted
+        hitcount_context["hit_message"] = hit_count_response.hit_message
+
+    new_comment = None
+    comment_form = CommentForm()  # doim mavjud bo'lsin (GET uchun)
+
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            messages.info(request, "Izoh qoldirish uchun tizimga kirishingiz kerak.")
+            login_url = (
+                settings.LOGIN_URL
+                if hasattr(settings, "LOGIN_URL")
+                else "/accounts/login/"
+            )
+            return redirect(f"{login_url}?next={request.path}")
+
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.news = news
+            new_comment.user = request.user
+            new_comment.save()
+            messages.success(request, "Izohingiz qabul qilindi.")
+            comment_form = CommentForm()
+
+    context = {
+        "news": news,
+        "comments": comments,
+        "new_comment": new_comment,
+        "comment_form": comment_form,
+        "comments.count": comments.count,
+    }
+    context.update(hitcount_context)
     return render(request, "news/news_detail.html", context=context)
 
 
+# @login_required
 # def HomePageView(request):
 #     news = News.published.all().order_by("-publish_time")[:3]
 #     maxalliy_news = News.published.all().filter(category__name="Маҳаллий")[:3]
@@ -153,7 +210,7 @@ class SportNewsView(ListView):
         return news
 
 
-class NewsUpdateView(UpdateView):
+class NewsUpdateView(OnlyLoggedSuperUser, UpdateView):
     model = News
     template_name = "crud/news_update.html"
     fields = ["title", "body", "image", "category", "status"]
@@ -166,7 +223,7 @@ class NewsUpdateView(UpdateView):
         return self.object.get_absolute_url()
 
 
-class NewsDeleteView(DeleteView):
+class NewsDeleteView(OnlyLoggedSuperUser, DeleteView):
     model = News
     template_name = "crud/news_delete.html"
     success_url = reverse_lazy("news:home_page")
@@ -176,7 +233,7 @@ class NewsDeleteView(DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class NewsCreateView(CreateView):
+class NewsCreateView(OnlyLoggedSuperUser, CreateView):
     model = News
     template_name = "crud/news_create.html"
     fields = ["title", "body", "image", "category", "status"]
@@ -187,3 +244,22 @@ class NewsCreateView(CreateView):
 
     def get_success_url(self):
         return self.object.get_absolute_url()
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_page_view(request):
+    admin_users = User.objects.filter(is_superuser=True)
+    context = {"admin_users": admin_users}
+
+    return render(request, "pages/admin_page.html", context=context)
+
+
+class SearchResultsList(ListView):
+    model = News
+    template_name = "news/search.html"
+    context_object_name = "news_all"
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        return News.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))

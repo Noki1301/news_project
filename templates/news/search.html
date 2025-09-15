@@ -1,0 +1,45 @@
+{% extends "news/base.html"%}
+
+{% block title %} Qidiruv natijalari {% endblock title %}
+
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">🔎 Qidiruv natijalari</h2>
+
+    {% if news_all %}
+        <div class="row">
+            {% for new in news_all %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        {% if new.image %}
+                            <img src="{{ new.image.url }}" 
+                                 class="card-img-top img-fluid" 
+                                 alt="{{ new.title }}" 
+                                 style="max-height:200px; object-fit:cover;">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">
+                                <a href="{% url 'news:news_detail' new.slug %}" 
+                                   class="text-decoration-none text-dark">
+                                    {{ new.title }}
+                                </a>
+                            </h5>
+                            <p class="card-text text-muted">
+                                {{ new.body|truncatewords:20 }}
+                            </p>
+                            <a href="{% url 'news:news_detail' new.slug %}" 
+                               class="btn btn-outline-primary mt-auto">
+                                Batafsil o‘qish →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            Qidiruv bo‘yicha hech narsa topilmadi 😕
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}

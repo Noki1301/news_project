@@ -3,16 +3,13 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>News 24</title>
-		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-		<meta content="Bootstrap Ecommerce Template" name="keywords" />
-		<meta
-			content="Bootstrap Ecommerce Template Free Download"
-			name="description"
-		/>
+		<title>{% block title %}News 24{% endblock title %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta content="News24 Portal" name="description" />
+		<meta content="News, Blog, Media" name="keywords" />
 
 		<!-- Favicon -->
-		<link href="{% static 'images/favicon.ico' %}" rel="icon" />
+		<link rel="icon" href="{% static 'images/favicon.ico' %}" />
 
 		<!-- Google Fonts -->
 		<link
@@ -24,7 +21,7 @@
 		<link href="{% static 'lib/slick/slick.css' %}" rel="stylesheet" />
 		<link href="{% static 'lib/slick/slick-theme.css' %}" rel="stylesheet" />
 
-		<!-- Bootstrap va FontAwesome tashqi CDN bo‘lsa ishlaydi -->
+		<!-- Bootstrap & FontAwesome -->
 		<link
 			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 			rel="stylesheet"
@@ -34,19 +31,17 @@
 			rel="stylesheet"
 		/>
 
-		<!-- Template Stylesheet -->
+		<!-- Main Stylesheet -->
 		<link href="{% static 'css/style.css' %}" rel="stylesheet" />
 	</head>
-
 	<body>
-		<!-- Top Header Start -->
 		<!-- Top Header -->
 		<div class="top-header py-2 border-bottom">
 			<div class="container">
 				<div class="row align-items-center">
 					<!-- Logo -->
 					<div class="col-lg-3 col-md-4">
-						<a href="{{ home_url }}" class="d-inline-block">
+						<a href="{{ home_url }}">
 							<img
 								src="{% static 'images/logo.png' %}"
 								alt="Logo"
@@ -56,103 +51,76 @@
 						</a>
 					</div>
 
-					<!-- Search (ixtiyoriy: action va name qo'ying) -->
+					<!-- Search -->
 					<div class="col-lg-6 d-none d-md-block">
-						<form class="d-flex" action="" method="get">
+						<form class="d-flex" action="{% url 'news:search' %}" method="get">
 							<input
-								class="form-control"
-								type="text"
+								type="search"
 								name="q"
-								placeholder="Search"
+								class="form-control"
+								placeholder="Qidiruv"
 							/>
-							<button class="btn btn-primary ml-2" type="submit">
+							<button type="submit" class="btn btn-primary ml-2">
 								<i class="fa fa-search"></i>
 							</button>
 						</form>
 					</div>
 
-					<!-- Sana + Auth + Social -->
-					<div class="col-lg-3 col-md-8">
-						<div class="d-flex flex-column align-items-end text-lg-right">
-							<p class="mb-2 small text-muted">{% now 'jS F Y D H:i' %}</p>
+					<!-- Date + User + Social -->
+					<div class="col-lg-3 col-md-8 text-lg-right text-center mt-2 mt-md-0">
+						<p class="small text-muted mb-2">{% now 'jS F Y, H:i' %}</p>
 
-							<!-- Login / Logout -->
-							<div class="d-flex align-items-center mb-2">
-								{% if user.is_authenticated %}
-								<span class="small">Welcome, {{ user.username }}</span>
-								<a href="{% url 'user_profile' %}" class="small ml-2"
-									>Profile</a
-								>
-								<form
-									action="{% url 'logout' %}"
-									method="post"
-									class="d-inline ml-2"
-								>
-									{% csrf_token %}
-									<button type="submit" class="btn btn-sm btn-outline-danger">
-										<i class="fa fa-sign-out"></i> Logout
-									</button>
-								</form>
-								{% else %}
-								<a
-									href="{% url 'login' %}"
-									class="btn btn-sm btn-outline-primary"
-								>
-									<i class="fa fa-sign-in"></i> Login
-								</a>
-								{% endif %}
-							</div>
+						<!-- Auth -->
+						{% if user.is_authenticated %}
+						<span class="small">👋 {{ user.username }}</span>
+						<a href="{% url 'user_profile' %}" class="small ml-2">Profil</a>
+						<form
+							method="post"
+							action="{% url 'logout' %}"
+							class="d-inline ml-2"
+						>
+							{% csrf_token %}
+							<button type="submit" class="btn btn-sm btn-outline-danger">
+								<i class="fa fa-sign-out-alt"></i> Chiqish
+							</button>
+						</form>
+						{% else %}
+						<a href="{% url 'login' %}" class="btn btn-sm btn-outline-primary">
+							<i class="fa fa-sign-in-alt"></i> Kirish
+						</a>
+						<a href="{% url 'user_register' %}" class="btn btn-outline-success">
+							<i class="fa fa-user-plus"></i> Ro'yxatdan o'tish
+						</a>
 
-							<!-- Social -->
-							<div class="social">
-								<a href="#" class="text-muted mr-2"
-									><i class="fab fa-twitter"></i
-								></a>
-								<a href="#" class="text-muted mr-2"
-									><i class="fab fa-facebook"></i
-								></a>
-								<a href="#" class="text-muted mr-2"
-									><i class="fab fa-linkedin"></i
-								></a>
-								<a href="#" class="text-muted mr-2"
-									><i class="fab fa-instagram"></i
-								></a>
-								<a href="#" class="text-muted"
-									><i class="fab fa-youtube"></i
-								></a>
-							</div>
-						</div>
+						{% endif %}
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- /Top Header -->
 
+		<!-- Flash Messages -->
 		{% if messages %}
 		<div class="container mt-3">
 			{% for message in messages %}
 			<div class="alert alert-success alert-dismissible fade show" role="alert">
 				{{ message }}
-				<button
-					type="button"
-					class="close"
-					data-dismiss="alert"
-					aria-label="Close"
-				>
-					<span aria-hidden="true">&times;</span>
+				<button type="button" class="close" data-dismiss="alert">
+					&times;
 				</button>
 			</div>
 			{% endfor %}
 		</div>
 		{% endif %}
 
-		<!-- Header / Nav -->
+		<!-- Navbar -->
 		<div class="header">
 			<div class="container">
-				<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+				<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 					<a href="{{ home_url }}" class="navbar-brand">MENU</a>
 					<button
-						type="button"
 						class="navbar-toggler"
+						type="button"
 						data-toggle="collapse"
 						data-target="#navbarCollapse"
 					>
@@ -160,8 +128,8 @@
 					</button>
 
 					<div
-						class="collapse navbar-collapse justify-content-between"
 						id="navbarCollapse"
+						class="collapse navbar-collapse justify-content-between"
 					>
 						<div class="navbar-nav m-auto">
 							<a href="{{ home_url }}" class="nav-item nav-link active"
@@ -188,121 +156,130 @@
 								>Спорт</a
 							>
 							<a href="#" class="nav-item nav-link">Single Page</a>
-							<a href="{{ contact_url }}" class="nav-item nav-link"
-								>Contact Us</a
-							>
+							<a href="{{ contact_url }}" class="nav-item nav-link">Contact</a>
+							{% if user.is_authenticated and user.is_superuser %}
+							<a href="{% url 'news:admin_page' %}" class='nav-item nav-link'>Admin Sahifa</a>
+							{% endif %}
+													<!-- Social -->
+						<div class="social mt-2">
+							<a href="#"><i class="fab fa-twitter text-muted"></i></a>
+							<a href="#"><i class="fab fa-facebook text-muted"></i></a>
+							<a href="#"><i class="fab fa-linkedin text-muted"></i></a>
+							<a href="#"><i class="fab fa-instagram text-muted"></i></a>
+							<a href="#"><i class="fab fa-youtube text-muted"></i></a>
+						</div>
 						</div>
 					</div>
 				</nav>
 			</div>
 		</div>
+		<!-- /Navbar -->
 
-		<!-- Header End -->
-		{% block content %} {% endblock %}
-		<!-- Footer Start -->
-		<div class="footer">
+		<!-- Content -->
+		<main class="my-4">{% block content %}{% endblock %}</main>
+
+		<!-- Footer -->
+		<footer class="footer bg-dark text-light pt-5">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-3 col-md-6">
-						<div class="footer-widget">
-							<h3 class="title">Useful Links</h3>
-							<ul>
-								<li><a href="#">Pellentesque</a></li>
-								<li><a href="#">Aliquam</a></li>
-								<li><a href="#">Fusce placerat</a></li>
-								<li><a href="#">Nulla hendrerit</a></li>
-								<li><a href="#">Maecenas</a></li>
-							</ul>
+					<!-- Useful Links -->
+					<div class="col-lg-3 col-md-6 mb-4">
+						<h5>Useful Links</h5>
+						<ul class="list-unstyled small">
+							<li><a href="#">Pellentesque</a></li>
+							<li><a href="#">Aliquam</a></li>
+							<li><a href="#">Fusce placerat</a></li>
+							<li><a href="#">Nulla hendrerit</a></li>
+							<li><a href="#">Maecenas</a></li>
+						</ul>
+					</div>
+
+					<!-- Quick Links -->
+					<div class="col-lg-3 col-md-6 mb-4">
+						<h5>Quick Links</h5>
+						<ul class="list-unstyled small">
+							<li><a href="#">Posuere egestas</a></li>
+							<li><a href="#">Sollicitudin</a></li>
+							<li><a href="#">Luctus non</a></li>
+							<li><a href="#">Duis tincidunt</a></li>
+							<li><a href="#">Elementum</a></li>
+						</ul>
+					</div>
+
+					<!-- Contact Info -->
+					<div class="col-lg-3 col-md-6 mb-4">
+						<h5>Get in Touch</h5>
+						<p>
+							<i class="fa fa-map-marker-alt"></i> 123 Terry Lane, New York, USA
+						</p>
+						<p><i class="fa fa-envelope"></i> email@example.com</p>
+						<p><i class="fa fa-phone"></i> +123-456-7890</p>
+						<div class="social">
+							<a href="#"><i class="fab fa-twitter text-light"></i></a>
+							<a href="#"><i class="fab fa-facebook text-light"></i></a>
+							<a href="#"><i class="fab fa-linkedin text-light"></i></a>
+							<a href="#"><i class="fab fa-instagram text-light"></i></a>
+							<a href="#"><i class="fab fa-youtube text-light"></i></a>
 						</div>
 					</div>
 
-					<div class="col-lg-3 col-md-6">
-						<div class="footer-widget">
-							<h3 class="title">Quick Links</h3>
-							<ul>
-								<li><a href="#">Posuere egestas</a></li>
-								<li><a href="#">Sollicitudin</a></li>
-								<li><a href="#">Luctus non</a></li>
-								<li><a href="#">Duis tincidunt</a></li>
-								<li><a href="#">Elementum</a></li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col-lg-3 col-md-6">
-						<div class="footer-widget">
-							<h3 class="title">Get in Touch</h3>
-							<div class="contact-info">
-								<p>
-									<i class="fa fa-map-marker"></i>123 Terry Lane, New York, USA
-								</p>
-								<p><i class="fa fa-envelope"></i>email@example.com</p>
-								<p><i class="fa fa-phone"></i>+123-456-7890</p>
-								<div class="social">
-									<a href=""><i class="fab fa-twitter"></i></a>
-									<a href=""><i class="fab fa-facebook"></i></a>
-									<a href=""><i class="fab fa-linkedin"></i></a>
-									<a href=""><i class="fab fa-instagram"></i></a>
-									<a href=""><i class="fab fa-youtube"></i></a>
+					<!-- Newsletter -->
+					<div class="col-lg-3 col-md-6 mb-4">
+						<h5>Newsletter</h5>
+						<p class="small">
+							Yangiliklardan xabardor bo‘lish uchun emailingizni qoldiring.
+						</p>
+						<form>
+							<div class="input-group">
+								<input
+									type="email"
+									class="form-control"
+									placeholder="Email..."
+								/>
+								<div class="input-group-append">
+									<button class="btn btn-primary">Yuborish</button>
 								</div>
 							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-3 col-md-6">
-						<div class="footer-widget">
-							<h3 class="title">Newsletter</h3>
-							<div class="newsletter">
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Vivamus sed porta dui. Class aptent taciti sociosqu ad litora
-									torquent per conubia nostra inceptos
-								</p>
-								<form>
-									<input
-										class="form-control"
-										type="email"
-										placeholder="Your email here"
-									/>
-									<button class="btn">Submit</button>
-								</form>
-							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- Footer End -->
+		</footer>
 
-		<!-- Footer Bottom Start -->
-		<div class="footer-bottom">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 copyright">
-						<p>
-							Copyright &copy; <a href="https://htmlcodex.com">HTML Codex</a>.
-							All Rights Reserved
-						</p>
-					</div>
-
-					<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-					<div class="col-md-6 template-by">
-						<p>Template By <a href="https://htmlcodex.com">HTML Codex</a></p>
-					</div>
-				</div>
+		<!-- Footer Bottom -->
+		<div class="footer-bottom bg-secondary text-light py-2">
+			<div class="container d-flex justify-content-between small">
+				<p class="mb-0">
+					&copy;
+					<a href="https://htmlcodex.com" class="text-light">HTML Codex</a> -
+					All Rights Reserved
+				</p>
+				<p class="mb-0">
+					Template by
+					<a href="https://htmlcodex.com" class="text-light">HTML Codex</a>
+				</p>
 			</div>
 		</div>
-		<!-- Footer Bottom End -->
 
 		<!-- Back to Top -->
 		<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+		<!-- Auto close alerts -->
 		<script>
-			// Alert'ni 5 soniyadan keyin yopish
 			setTimeout(function () {
-				$(".alert").alert("close")
+				$(".alert-success, .alert-info").alert("close")
 			}, 5000)
 		</script>
-		<!-- JavaScript Libraries -->
-		{% block js %} {% endblock js %}
+
+		<!-- JS Libraries -->
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+		<script src="{% static 'lib/easing/easing.min.js' %}"></script>
+		<script src="{% static 'lib/slick/slick.min.js' %}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/js/all.min.js"></script>
+
+		<!-- Custom JS -->
+		<script src="{% static 'js/main.js' %}"></script>
+		{% block js %}{% endblock js %}
 	</body>
 </html>

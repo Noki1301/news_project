@@ -1,18 +1,29 @@
-{% extends "news/base.html" %} {% load static %} {% block title %} {{ news.title
-}} | News detail {% endblock title %} {% block content %}
+{% extends "news/base.html" %} {% load static %} {% load widget_tweaks %} 
+{% load hitcount_tags %} {% block title %} {{ news.title }} | News detail 
+{%endblock title %} {% block content %}
 <div class="container my-5">
+	<!-- News Card -->
 	<div class="card shadow-lg border-0 rounded-3">
 		<div class="card-body">
+			<!-- Title -->
 			<h2 class="card-title mb-3 text-primary fw-bold">{{ news.title }}</h2>
+
+			<!-- Meta info -->
 			<p class="text-muted mb-1">
 				<i class="bi bi-folder-fill"></i>
-				Category: <span class="fw-semibold">{{ news.category }}</span>
+				<span class="badge bg-info text-dark">{{ news.category }}</span>
 			</p>
 			<p class="text-muted">
 				<i class="bi bi-clock"></i>
-				Published: {{ news.publish_time }}
+				{{ news.publish_time|date:"d-m-Y H:i" }}
 			</p>
-
+			<!-- Кўришлар сонини кўрсатиш учун -->
+			<div class="news-views">
+				{% get_hit_count for news as total_hits %}
+				<i class="fa fa-eye"></i> {{ total_hits }}
+			</div>
+			<p>Izoxlar soni:{{ comments.count }}</p>
+			<!-- Image -->
 			{% if news.image %}
 			<div class="text-center my-4">
 				<img
@@ -24,8 +35,11 @@
 			</div>
 			{% endif %}
 
+			<!-- Body -->
 			<p class="card-text fs-5 mt-3">{{ news.body|linebreaks }}</p>
 
+			<!-- Edit/Delete (only superuser) -->
+			{% if request.user.is_authenticated and request.user.is_superuser %}
 			<div class="d-flex justify-content-end gap-2 mt-4">
 				<a
 					href="{% url 'news:news_update' news.slug %}"
@@ -40,7 +54,63 @@
 					<i class="bi bi-trash"></i> O‘chirish
 				</a>
 			</div>
+			{% endif %}
 		</div>
 	</div>
+
+	<!-- Comments section -->
+	<div class="card shadow-sm mt-4">
+		<div class="card-body">
+			<h3 class="mb-3">💬 Izohlar</h3>
+			{% if comments %} {% for comment in comments %}
+			<div class="border-bottom mb-3 pb-2">
+				<p class="fw-bold mb-1">
+					<i class="bi bi-person-circle text-primary"></i>
+					{{ comment.user }}
+					<span class="text-muted small">
+						• {{ comment.created_time|date:"d-m-Y H:i" }}</span
+					>
+				</p>
+				<p class="mb-1">{{ comment.body|linebreaks }}</p>
+			</div>
+			{% endfor %} {% else %}
+			<p class="text-muted">Hozircha izohlar mavjud emas 🙁</p>
+			{% endif %}
+		</div>
+	</div>
+
+	<!-- Add comment form or login/register info -->
+	{% if request.user.is_authenticated %}
+	<div class="card shadow-sm mt-4">
+		<div class="card-body">
+			<h3 class="mb-3">✍️ Izoh qoldirish</h3>
+			<form method="POST" class="needs-validation" novalidate>
+				{% csrf_token %}
+				<div class="mb-3">
+					{{ comment_form.body.label_tag }} {{ comment_form.body|add_class:"form-control" }}
+				</div>
+				<button type="submit" class="btn btn-primary">
+					<i class="bi bi-send-fill"></i> Yuborish
+				</button>
+			</form>
+		</div>
+	</div>
+	{% else %}
+	<div class="alert alert-warning mt-4 shadow-sm">
+		<p class="mb-1">
+			<i class="bi bi-exclamation-circle"></i>
+			Faqatgina <strong>ro‘yxatdan o‘tgan foydalanuvchilar</strong> izoh
+			qoldirishi mumkin.
+		</p>
+		<p class="mb-0">
+			👉 Izoh qoldirish uchun
+			<a href="{% url 'user_register' %}" class="alert-link"
+				>ro‘yxatdan o‘ting</a
+			>
+			yoki
+			<a href="{% url 'login' %}" class="alert-link">tizimga kiring</a>.
+		</p>
+	</div>
+	{% endif %}
 </div>
 {% endblock content %}

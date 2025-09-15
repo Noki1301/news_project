@@ -1,0 +1,45 @@
+{% extends "news/base.html" %} {% load static %} {% block title %}Admin
+sahifasi{% endblock %} {% block content %}
+<div class="container mt-5">
+	<h1 class="text-center mb-4">👨‍💻 Admin sahifasi</h1>
+
+	<!-- Sarlavha va tugma yonma-yon -->
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<h3 class="mb-0">Barcha adminlar ro‘yxati</h3>
+		<a href="{% url 'news:news_create' %}" class="btn btn-success">
+			<i class="fa fa-plus"></i> Yangilik qo‘shish
+		</a>
+	</div>
+
+	<div class="table-responsive shadow-sm rounded">
+		<table class="table table-striped table-hover align-middle">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">🆔</th>
+					<th scope="col">👤 Username</th>
+					<th scope="col">🧑 Ismi</th>
+					<th scope="col">👨‍👩‍👦 Familiyasi</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in admin_users %}
+				<tr>
+					<td>
+						<i class="fa fa-id-card text-primary"></i> {{ forloop.counter }}
+					</td>
+					<td>{{ user.username }}</td>
+					<td>{{ user.first_name|default:"-" }}</td>
+					<td>{{ user.last_name|default:"-" }}</td>
+				</tr>
+				{% empty %}
+				<tr>
+					<td colspan="4" class="text-center text-muted">
+						Hozircha admin topilmadi 🙁
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
