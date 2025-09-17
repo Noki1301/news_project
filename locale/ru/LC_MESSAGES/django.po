@@ -1,0 +1,336 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-15 12:00+0000\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: Nodir <youremail@example.com>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+#: .\config\settings.py:126
+msgid "Uzbek"
+msgstr "Узбекский"
+
+#: .\config\settings.py:127
+msgid "English"
+msgstr "Английский"
+
+#: .\config\settings.py:128
+msgid "Russian"
+msgstr "Русский"
+
+#: .\templates\accounts\edit_profile.html:10
+msgid "Foydalanuvchi ma'lumotlarini o'zgartirish"
+msgstr "Изменить данные пользователя"
+
+#: .\templates\accounts\edit_profile.html:21
+msgid "O'zgarishlarni saqlash"
+msgstr "Сохранить изменения"
+
+#: .\templates\accounts\register.html:10
+msgid "Yangi foydalanuvchi ro'yxatdan o'tishi"
+msgstr "Регистрация нового пользователя"
+
+#: .\templates\accounts\register.html:14
+msgid "Iltimos, quyidagi ma'lumotlarni to'ldiring."
+msgstr "Пожалуйста, заполните следующие данные."
+
+#: .\templates\accounts\register.html:21
+msgid "Ro'yxatdan o'tish"
+msgstr "Зарегистрироваться"
+
+#: .\templates\accounts\register.html:28
+msgid "Allaqachon akkountingiz bormi?"
+msgstr "Уже есть аккаунт?"
+
+#: .\templates\accounts\register.html:29
+msgid "Kirish"
+msgstr "Войти"
+
+#: .\templates\accounts\register_done.html:4
+msgid "tabriklaymiz ruyhatdan muvaffaqiyatli o'tdingiz!"
+msgstr "Поздравляем, вы успешно зарегистрировались!"
+
+#: .\templates\accounts\register_done.html:5
+msgid "Endi saytga."
+msgstr "Теперь на сайт."
+
+#: .\templates\accounts\register_done.html:5
+msgid "login"
+msgstr "войти"
+
+#: .\templates\accounts\register_done.html:5
+msgid "qilishingiz mumkin."
+msgstr "вы можете."
+
+#: .\templates\news\base.html:77
+msgid "Profil"
+msgstr "Профиль"
+
+#: .\templates\news\base.html:85
+msgid "Chiqish"
+msgstr "Выход"
+
+#: .\templates\news\base.html:90
+msgid " Kirish"
+msgstr " Вход"
+
+#: .\templates\news\base.html:93
+msgid " Ro'yxatdan o'tish "
+msgstr " Регистрация "
+
+#: .\templates\news\base.html:121
+msgid "MENU"
+msgstr "МЕНЮ"
+
+#: .\templates\news\base.html:137
+msgid "Bosh sahifa"
+msgstr "Главная страница"
+
+#: .\templates\news\base.html:142
+msgid "Маҳаллий"
+msgstr "Местные"
+
+#: .\templates\news\base.html:147
+msgid "Хориж"
+msgstr "Зарубежные"
+
+#: .\templates\news\base.html:152
+msgid "Технология"
+msgstr "Технологии"
+
+#: .\templates\news\base.html:157
+msgid "Спорт"
+msgstr "Спорт"
+
+#: .\templates\news\base.html:159
+msgid "Single Page"
+msgstr "Одна страница"
+
+#: .\templates\news\base.html:160
+msgid "Contact"
+msgstr "Контакты"
+
+#: .\templates\news\base.html:162
+msgid "Admin Sahifa"
+msgstr "Админ страница"
+
+#: .\templates\news\base.html:247
+msgid "Yangiliklardan xabardor bo‘lish uchun emailingizni qoldiring."
+msgstr "Оставьте свой email, чтобы быть в курсе новостей."
+
+#: .\templates\news\base.html:257 .\templates\news\news_detail.html:93
+msgid "Yuborish"
+msgstr "Отправить"
+
+#: .\templates\news\index.html:76 .\templates\news\index.html:298
+msgid "Hozircha yangiliklar yo‘q."
+msgstr "Пока новостей нет."
+
+#: .\templates\news\index.html:89
+msgid "Sport xabarlari"
+msgstr "Новости спорта"
+
+#: .\templates\news\index.html:120
+msgid "Sport bo‘limida yangilik yo‘q."
+msgstr "В разделе спорт новостей нет."
+
+#: .\templates\news\index.html:128
+msgid " Texnologiya "
+msgstr " Технологии "
+
+#: .\templates\news\index.html:160
+msgid " Texnologiya bo‘limida yangilik yo‘q. "
+msgstr " В разделе технологии новостей нет. "
+
+#: .\templates\news\index.html:176
+msgid " Маҳаллий"
+msgstr " Местные "
+
+#: .\templates\news\index.html:207
+msgid "Mahalliy yangiliklar yo‘q."
+msgstr "Местных новостей нет."
+
+#: .\templates\news\index.html:246
+msgid "Xorij bo‘limida yangilik yo‘q."
+msgstr "В разделе зарубежных новостей нет."
+
+#: .\templates\news\index.html:306
+msgid " Ommabop habarlar"
+msgstr " Популярные новости"
+
+#: .\templates\news\index.html:362
+msgid "Category"
+msgstr "Категория"
+
+#: .\templates\news\index.html:374
+msgid "Kategoriya yo‘q."
+msgstr "Категорий нет."
+
+#: .\templates\news\index.html:383
+msgid "Tags"
+msgstr "Теги"
+
+#: .\templates\news\index.html:391
+msgid "Teglar yo‘q."
+msgstr "Тегов нет."
+
+#: .\templates\news\mahalliy.html:5 .\templates\news\mahalliy.html:10
+msgid "Mahalliy yangiliklar"
+msgstr "Местные новости"
+
+#: .\templates\news\mahalliy.html:36
+msgid "     Batafsil o‘qish →"
+msgstr "     Читать подробнее →"
+
+#: .\templates\news\mahalliy.html:44
+msgid "Hozircha mahalliy yangiliklar mavjud emas."
+msgstr "Пока местных новостей нет."
+
+#: .\templates\news\news_detail.html:25
+msgid "Izoxlar soni:"
+msgstr "Количество комментариев:"
+
+#: .\templates\news\news_detail.html:48
+msgid "Tahrirlash"
+msgstr "Редактировать"
+
+#: .\templates\news\news_detail.html:54
+msgid "O‘chirish"
+msgstr "Удалить"
+
+#: .\templates\news\news_detail.html:77
+msgid "Hozircha izohlar mavjud emas 🙁"
+msgstr "Пока комментариев нет 🙁"
+
+#: .\templates\news\news_detail.html:86
+msgid "✍️ Izoh qoldirish"
+msgstr "✍️ Оставить комментарий"
+
+#: .\templates\news\news_detail.html:102
+msgid "Faqatgina <strong>ro‘yxatdan o‘tgan foydalanuvchilar</strong> izoh qoldirishi mumkin."
+msgstr "Только <strong>зарегистрированные пользователи</strong> могут оставлять комментарии."
+
+#: .\templates\news\news_detail.html:106
+msgid "👉 Izoh qoldirish uchun"
+msgstr "👉 Чтобы оставить комментарий"
+
+#: .\templates\news\news_detail.html:108
+msgid "ro‘yxatdan o‘ting"
+msgstr "зарегистрируйтесь"
+
+#: .\templates\news\news_detail.html:110
+msgid "yoki"
+msgstr "или"
+
+#: .\templates\news\news_detail.html:111
+msgid "tizimga kiring"
+msgstr "войдите в систему"
+
+#: .\templates\news\search.html:3
+msgid "Qidiruv natijalari"
+msgstr "Результаты поиска"
+
+#: .\templates\news\search.html:7
+msgid "🔎 Qidiruv natijalari"
+msgstr "🔎 Результаты поиска"
+
+#: .\templates\news\search.html:32 .\templates\news\technologiya.html:36
+#: .\templates\news\xorij.html:38
+msgid "Batafsil o‘qish →"
+msgstr "Читать подробнее →"
+
+#: .\templates\news\search.html:41
+msgid "Qidiruv bo‘yicha hech narsa topilmadi 😕"
+msgstr "По вашему запросу ничего не найдено 😕"
+
+#: .\templates\news\sport.html:5 .\templates\news\sport.html:10
+msgid "Sport yangiliklari"
+msgstr "Новости спорта"
+
+#: .\templates\news\sport.html:36
+msgid " Batafsil o‘qish →"
+msgstr " Читать подробнее →"
+
+#: .\templates\news\sport.html:44
+msgid "Hozircha sport yangiliklari mavjud emas."
+msgstr "Пока спортивных новостей нет."
+
+#: .\templates\news\technologiya.html:5
+msgid "  Texnologiya yangiliklari"
+msgstr "  Новости технологий"
+
+#: .\templates\news\technologiya.html:10
+msgid "Texnologiya yangiliklari"
+msgstr "Новости технологий"
+
+#: .\templates\news\technologiya.html:44
+msgid "Hozircha texnologiya yangiliklari mavjud emas."
+msgstr "Пока новостей технологий нет."
+
+#: .\templates\news\xorij.html:4
+msgid " Xorij yangiliklari"
+msgstr " Новости зарубежа"
+
+#: .\templates\news\xorij.html:46
+msgid "Hozircha xorij yangiliklari mavjud emas."
+msgstr "Пока зарубежных новостей нет."
+
+#: .\templates\pages\admin_page.html:4
+msgid "Admin sahifasi"
+msgstr "Страница администратора"
+
+#: .\templates\pages\admin_page.html:8
+msgid "Barcha adminlar ro‘yxati"
+msgstr "Список всех администраторов"
+
+#: .\templates\pages\admin_page.html:10
+msgid "Yangilik qo‘shish"
+msgstr "Добавить новость"
+
+#: .\templates\pages\admin_page.html:19
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: .\templates\pages\admin_page.html:20
+msgid "Ismi"
+msgstr "Имя"
+
+#: .\templates\pages\admin_page.html:21
+msgid "Familiyasi"
+msgstr "Фамилия"
+
+#: .\templates\pages\admin_page.html:37
+msgid "Hozircha admin topilmadi "
+msgstr "Администраторы пока не найдены "
+
+#: .\templates\pages\user_profile.html:8
+msgid "Foydalanuvchi profili"
+msgstr "Профиль пользователя"
+
+#: .\templates\pages\user_profile.html:21
+msgid "Email:"
+msgstr "Эл. почта:"
+
+#: .\templates\pages\user_profile.html:24
+msgid "Ism:"
+msgstr "Имя:"
+
+#: .\templates\pages\user_profile.html:27
+msgid "Familiya:"
+msgstr "Фамилия:"
+
+#: .\templates\pages\user_profile.html:30
+msgid "Tug'ilgan kun:"
+msgstr "Дата рождения:"
+
+#: .\templates\pages\user_profile.html:36
+msgid "Profilni tahrirlash"
+msgstr "Редактировать профиль"
+
+#: .\templates\pages\user_profile.html:39
+msgid "Parolni almashtirish"
+msgstr "Сменить пароль"

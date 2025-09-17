@@ -1,7 +1,8 @@
-{% extends 'news/base.html'%} {% load static %} {% block title %} Xorij
+{% extends 'news/base.html'%} {% load static % } {% load i18n %}
+{% block title %} Xorij
 yangiliklari {% endblock title %} {% block content %}
 <div class="container my-5">
-	<h1 class="mb-4 text-center text-danger fw-bold">🌍 Xorij yangiliklari</h1>
+	<h1 class="mb-4 text-center text-danger fw-bold">🌍{% blocktrans %} Xorij yangiliklari{% endblocktrans %}</h1>
 	<div class="row g-4">
 		{% for news in xorij_yangiliklar %}
 		<div class="col-md-6 col-lg-4">
@@ -35,7 +36,7 @@ yangiliklari {% endblock title %} {% block content %}
 							href="{{ news.get_absolute_url }}"
 							class="btn btn-sm btn-outline-danger"
 						>
-							Batafsil o‘qish →
+							{% blocktrans %}Batafsil o‘qish →{% endblocktrans %}
 						</a>
 					</div>
 				</div>
@@ -43,7 +44,7 @@ yangiliklari {% endblock title %} {% block content %}
 		</div>
 		{% empty %}
 		<div class="col-12 text-center">
-			<p class="text-muted">Hozircha xorij yangiliklari mavjud emas.</p>
+			<p class="text-muted">{% blocktrans %}Hozircha xorij yangiliklari mavjud emas.{% endblocktrans %}</p>
 		</div>
 		{% endfor %}
 	</div>

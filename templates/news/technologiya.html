@@ -1,13 +1,14 @@
 {% extends 'news/base.html'%}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
-    Texnologiya yangiliklari
+{% blocktrans %}  Texnologiya yangiliklari{% endblocktrans %}
 {% endblock title %}
 
 {% block content %}
 <div class="container my-5">
-    <h1 class="mb-4 text-center text-info fw-bold">💻 Texnologiya yangiliklari</h1>
+    <h1 class="mb-4 text-center text-info fw-bold">💻 {% blocktrans %}Texnologiya yangiliklari{% endblocktrans %}</h1>
     <div class="row g-4">
         {% for news in technologiya_yangiliklar %}
         <div class="col-md-6 col-lg-4">
@@ -33,7 +34,7 @@
                     </p>
                     <div class="mt-auto">
                         <a href="{{ news.get_absolute_url }}" class="btn btn-sm btn-outline-info">
-                            Batafsil o‘qish →
+                            {% blocktrans %}Batafsil o‘qish →{% endblocktrans %}
                         </a>
                     </div>
                 </div>
@@ -41,7 +42,7 @@
         </div>
         {% empty %}
         <div class="col-12 text-center">
-            <p class="text-muted">Hozircha texnologiya yangiliklari mavjud emas.</p>
+            <p class="text-muted">{% blocktrans %}Hozircha texnologiya yangiliklari mavjud emas.{% endblocktrans %}</p>
         </div>
         {% endfor %}
     </div>

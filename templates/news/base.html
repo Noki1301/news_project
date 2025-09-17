@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -73,7 +74,7 @@
 						<!-- Auth -->
 						{% if user.is_authenticated %}
 						<span class="small">👋 {{ user.username }}</span>
-						<a href="{% url 'user_profile' %}" class="small ml-2">Profil</a>
+						<a href="{% url 'user_profile' %}" class="small ml-2">{% blocktrans %}Profil{% endblocktrans %}</a>
 						<form
 							method="post"
 							action="{% url 'logout' %}"
@@ -81,15 +82,15 @@
 						>
 							{% csrf_token %}
 							<button type="submit" class="btn btn-sm btn-outline-danger">
-								<i class="fa fa-sign-out-alt"></i> Chiqish
+								<i class="fa fa-sign-out-alt"></i> {% blocktrans %}Chiqish{% endblocktrans %}
 							</button>
 						</form>
 						{% else %}
 						<a href="{% url 'login' %}" class="btn btn-sm btn-outline-primary">
-							<i class="fa fa-sign-in-alt"></i> Kirish
+							<i class="fa fa-sign-in-alt"></i>{% blocktrans %} Kirish{% endblocktrans %}
 						</a>
 						<a href="{% url 'user_register' %}" class="btn btn-outline-success">
-							<i class="fa fa-user-plus"></i> Ro'yxatdan o'tish
+							<i class="fa fa-user-plus"></i>{% blocktrans %} Ro'yxatdan o'tish {% endblocktrans %}
 						</a>
 
 						{% endif %}
@@ -117,7 +118,7 @@
 		<div class="header">
 			<div class="container">
 				<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-					<a href="{{ home_url }}" class="navbar-brand">MENU</a>
+					<a href="{{ home_url }}" class="navbar-brand">{% blocktrans %}MENU{% endblocktrans %}</a>
 					<button
 						class="navbar-toggler"
 						type="button"
@@ -133,33 +134,49 @@
 					>
 						<div class="navbar-nav m-auto">
 							<a href="{{ home_url }}" class="nav-item nav-link active"
-								>Bosh sahifa</a
+								>{% blocktrans %}Bosh sahifa{% endblocktrans %}</a
 							>
 							<a
 								href="{% url 'news:mahalliy_news_page' %}"
 								class="nav-item nav-link"
-								>Маҳаллий</a
+								>{% blocktrans %}Маҳаллий{% endblocktrans %}</a
 							>
 							<a
 								href="{% url 'news:xorij_news_page' %}"
 								class="nav-item nav-link"
-								>Хориж</a
+								>{% blocktrans %}Хориж{% endblocktrans %}</a
 							>
 							<a
 								href="{% url 'news:technology_news_page' %}"
 								class="nav-item nav-link"
-								>Технология</a
+								>{% blocktrans %}Технология{% endblocktrans %}</a
 							>
 							<a
 								href="{% url 'news:sport_news_page' %}"
 								class="nav-item nav-link"
-								>Спорт</a
+								>{% blocktrans %}Спорт{% endblocktrans %}</a
 							>
-							<a href="#" class="nav-item nav-link">Single Page</a>
-							<a href="{{ contact_url }}" class="nav-item nav-link">Contact</a>
+							<a href="#" class="nav-item nav-link">{% blocktrans %}Single Page{% endblocktrans %}</a>
+							<a href="{{ contact_url }}" class="nav-item nav-link">{% blocktrans %}Contact{% endblocktrans %}</a>
 							{% if user.is_authenticated and user.is_superuser %}
-							<a href="{% url 'news:admin_page' %}" class='nav-item nav-link'>Admin Sahifa</a>
+							<a href="{% url 'news:admin_page' %}" class='nav-item nav-link'>{% blocktrans %}Admin Sahifa{% endblocktrans %}</a>
 							{% endif %}
+			
+
+<form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}">
+    <select name="language">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Go">
+</form>
 													<!-- Social -->
 						<div class="social mt-2">
 							<a href="#"><i class="fab fa-twitter text-muted"></i></a>
@@ -227,7 +244,7 @@
 					<div class="col-lg-3 col-md-6 mb-4">
 						<h5>Newsletter</h5>
 						<p class="small">
-							Yangiliklardan xabardor bo‘lish uchun emailingizni qoldiring.
+{% blocktrans %}							Yangiliklardan xabardor bo‘lish uchun emailingizni qoldiring.{% endblocktrans %}
 						</p>
 						<form>
 							<div class="input-group">
@@ -237,7 +254,7 @@
 									placeholder="Email..."
 								/>
 								<div class="input-group-append">
-									<button class="btn btn-primary">Yuborish</button>
+									<button class="btn btn-primary">{% blocktrans %}Yuborish{% endblocktrans %}</button>
 								</div>
 							</div>
 						</form>

@@ -213,7 +213,17 @@ class SportNewsView(ListView):
 class NewsUpdateView(OnlyLoggedSuperUser, UpdateView):
     model = News
     template_name = "crud/news_update.html"
-    fields = ["title", "body", "image", "category", "status"]
+    fields = [
+        "title_uz",
+        "title_ru",
+        "title_en",
+        "body_uz",
+        "body_ru",
+        "body_en",
+        "image",
+        "category",
+        "status",
+    ]
 
     def form_valid(self, form):
         messages.success(self.request, "Yangilik muvaffaqiyatli yangilandi!")
@@ -236,7 +246,17 @@ class NewsDeleteView(OnlyLoggedSuperUser, DeleteView):
 class NewsCreateView(OnlyLoggedSuperUser, CreateView):
     model = News
     template_name = "crud/news_create.html"
-    fields = ["title", "body", "image", "category", "status"]
+    fields = [
+        "title_uz",
+        "title_ru",
+        "title_en",
+        "body_uz",
+        "body_ru",
+        "body_en",
+        "image",
+        "category",
+        "status",
+    ]
 
     def form_valid(self, form):
         messages.success(self.request, "Yangilik muvaffaqiyatli yaratildi!")

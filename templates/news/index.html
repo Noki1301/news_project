@@ -1,4 +1,5 @@
-{% extends "news/base.html" %} {% load static %} {% load hitcount_tags %} 
+{% extends "news/base.html" %} {% load static %} {% load i18n %}
+{% load hitcount_tags %} 
 {% block title %}Home - News24{% endblock title %} {% block content %}  
 {% with placeholder='images/placeholder.jpg' %}
 
@@ -73,7 +74,7 @@
 			</div>
 		</div>
 		{% endwith %} {% else %}
-		<div class="text-center text-muted py-5">Hozircha yangiliklar yo‘q.</div>
+		<div class="text-center text-muted py-5">{% blocktrans %}Hozircha yangiliklar yo‘q.{% endblocktrans %}</div>
 		{% endif %}
 	</div>
 </div>
@@ -86,7 +87,7 @@
 			<!-- Sport -->
 			<div class="col-md-6 mb-4">
 				<h2 class="fw-bold mb-3">
-					<i class="fas fa-align-justify"></i> Sport xabarlari
+					<i class="fas fa-align-justify"></i> {% blocktrans %}Sport xabarlari{% endblocktrans %}
 				</h2>
 				<div class="row cn-slider">
 					{% for sport in sport_news %}
@@ -117,7 +118,7 @@
 						</div>
 					</div>
 					{% empty %}
-					<div class="col-12 text-muted">Sport bo‘limida yangilik yo‘q.</div>
+					<div class="col-12 text-muted">{% blocktrans %}Sport bo‘limida yangilik yo‘q.{% endblocktrans %}</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -125,7 +126,7 @@
 			<!-- Texnologiya -->
 			<div class="col-md-6 mb-4">
 				<h2 class="fw-bold mb-3">
-					<i class="fas fa-align-justify"></i> Texnologiya
+					<i class="fas fa-align-justify"></i>{% blocktrans %} Texnologiya {% endblocktrans %}
 				</h2>
 				<div class="row cn-slider">
 					{% for tech in technology_news %}
@@ -157,7 +158,7 @@
 					</div>
 					{% empty %}
 					<div class="col-12 text-muted">
-						Texnologiya bo‘limida yangilik yo‘q.
+{% blocktrans %} Texnologiya bo‘limida yangilik yo‘q. {% endblocktrans %}
 					</div>
 					{% endfor %}
 				</div>
@@ -173,7 +174,7 @@
 			<!-- Mahalliy -->
 			<div class="col-md-6 mb-4">
 				<h2 class="fw-bold mb-3">
-					<i class="fas fa-align-justify"></i> Маҳаллий
+					<i class="fas fa-align-justify"></i>{% blocktrans %} Маҳаллий{% endblocktrans %}
 				</h2>
 				<div class="row cn-slider">
 					{% for max in maxalliy_news %}
@@ -204,7 +205,7 @@
 						</div>
 					</div>
 					{% empty %}
-					<div class="col-12 text-muted">Mahalliy yangiliklar yo‘q.</div>
+					<div class="col-12 text-muted">{% blocktrans %}Mahalliy yangiliklar yo‘q.{% endblocktrans %}</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -243,7 +244,7 @@
 						</div>
 					</div>
 					{% empty %}
-					<div class="col-12 text-muted">Xorij bo‘limida yangilik yo‘q.</div>
+					<div class="col-12 text-muted">{% blocktrans %}Xorij bo‘limida yangilik yo‘q.{% endblocktrans %}</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -261,7 +262,7 @@
 					<!-- So'nggi yangiliklar -->
 					<div class="col-md-12 mb-4">
 						<h2 class="fw-bold mb-3">
-							<i class="fas fa-align-justify"></i> So‘nggi yangiliklar
+							<i class="fas fa-align-justify"></i> {% blocktrans %}So‘nggi yangiliklar{% endblocktrans %}
 						</h2>
 						<div class="row">
 							{% for new in news %}
@@ -295,7 +296,7 @@
 								</div>
 							</div>
 							{% empty %}
-							<div class="col-12 text-muted">Hozircha yangiliklar yo‘q.</div>
+							<div class="col-12 text-muted">{% blocktrans %}Hozircha yangiliklar yo‘q.{% endblocktrans %}</div>
 							{% endfor %}
 						</div>
 					</div>
@@ -303,7 +304,7 @@
 					<!-- Ommabop habarlar (static demo) -->
 					<div class="col-md-12 mb-4">
 						<h2 class="fw-bold mb-3">
-							<i class="fas fa-align-justify"></i> Ommabop habarlar
+							<i class="fas fa-align-justify"></i>{% blocktrans %} Ommabop habarlar{% endblocktrans %}
 						</h2>
 						<div class="row">
 							<div class="col-lg-6 mb-4">
@@ -359,7 +360,7 @@
 					<!-- Categories -->
 					<div class="sidebar-widget mb-4">
 						<h2 class="fw-bold mb-3">
-							<i class="fas fa-align-justify"></i> Category
+							<i class="fas fa-align-justify"></i> {% blocktrans %}Category{% endblocktrans %}
 						</h2>
 						<div class="category">
 							<ul class="fa-ul mb-0">
@@ -371,7 +372,7 @@
 									<a href="#" class="text-dark">{{ category.name }}</a>
 								</li>
 								{% empty %}
-								<li class="text-muted">Kategoriya yo‘q.</li>
+								<li class="text-muted">{% blocktrans %}Kategoriya yo‘q.{% endblocktrans %}</li>
 								{% endfor %}
 							</ul>
 						</div>
@@ -380,7 +381,7 @@
 					<!-- Tags -->
 					<div class="sidebar-widget mb-4">
 						<h2 class="fw-bold mb-3">
-							<i class="fas fa-align-justify"></i> Tags
+							<i class="fas fa-align-justify"></i> {% blocktrans %}Tags{% endblocktrans %}
 						</h2>
 						<div class="tags">
 							{% for category in categories %}
@@ -388,7 +389,7 @@
 								>{{ category.name }}</a
 							>
 							{% empty %}
-							<span class="text-muted">Teglar yo‘q.</span>
+							<span class="text-muted">{% blocktrans %}Teglar yo‘q.{% endblocktrans %}</span>
 							{% endfor %}
 						</div>
 					</div>

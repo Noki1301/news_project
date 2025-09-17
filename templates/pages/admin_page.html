@@ -1,13 +1,17 @@
-{% extends "news/base.html" %} {% load static %} {% block title %}Admin
-sahifasi{% endblock %} {% block content %}
+{% extends "news/base.html" %} {% load static %} {% load i18n %} {% block title%}Admin sahifasi{% endblock %} {% block content %}
 <div class="container mt-5">
-	<h1 class="text-center mb-4">👨‍💻 Admin sahifasi</h1>
+	<h1 class="text-center mb-4">
+		👨‍💻 {% blocktrans %}Admin sahifasi{% endblocktrans %}
+	</h1>
 
 	<!-- Sarlavha va tugma yonma-yon -->
 	<div class="d-flex justify-content-between align-items-center mb-3">
-		<h3 class="mb-0">Barcha adminlar ro‘yxati</h3>
+		<h3 class="mb-0">
+			{% blocktrans %}Barcha adminlar ro‘yxati{% endblocktrans %}
+		</h3>
 		<a href="{% url 'news:news_create' %}" class="btn btn-success">
-			<i class="fa fa-plus"></i> Yangilik qo‘shish
+			<i class="fa fa-plus"></i> {% blocktrans %}Yangilik qo‘shish{%
+			endblocktrans %}
 		</a>
 	</div>
 
@@ -16,9 +20,9 @@ sahifasi{% endblock %} {% block content %}
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">🆔</th>
-					<th scope="col">👤 Username</th>
-					<th scope="col">🧑 Ismi</th>
-					<th scope="col">👨‍👩‍👦 Familiyasi</th>
+					<th scope="col">👤 {% blocktrans %}Username{% endblocktrans %}</th>
+					<th scope="col">🧑 {% blocktrans %}Ismi{% endblocktrans %}</th>
+					<th scope="col">👨‍👩‍👦 {% blocktrans %}Familiyasi{% endblocktrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,7 +38,7 @@ sahifasi{% endblock %} {% block content %}
 				{% empty %}
 				<tr>
 					<td colspan="4" class="text-center text-muted">
-						Hozircha admin topilmadi 🙁
+						{% blocktrans %}Hozircha admin topilmadi {% endblocktrans %}🙁
 					</td>
 				</tr>
 				{% endfor %}

@@ -1,4 +1,5 @@
-{% extends "news/base.html" %} {% load static %} {% load widget_tweaks %} 
+{% extends "news/base.html" %} {% load static %} {% load i18n %}
+{% load widget_tweaks %} 
 {% load hitcount_tags %} {% block title %} {{ news.title }} | News detail 
 {%endblock title %} {% block content %}
 <div class="container my-5">
@@ -22,7 +23,7 @@
 				{% get_hit_count for news as total_hits %}
 				<i class="fa fa-eye"></i> {{ total_hits }}
 			</div>
-			<p>Izoxlar soni:{{ comments.count }}</p>
+			<p>{% blocktrans %}Izoxlar soni:{% endblocktrans %}{{ comments.count }}</p>
 			<!-- Image -->
 			{% if news.image %}
 			<div class="text-center my-4">
@@ -45,13 +46,13 @@
 					href="{% url 'news:news_update' news.slug %}"
 					class="btn btn-outline-warning"
 				>
-					<i class="bi bi-pencil-square"></i> Tahrirlash
+					<i class="bi bi-pencil-square"></i> {% blocktrans %}Tahrirlash{% endblocktrans %}
 				</a>
 				<a
 					href="{% url 'news:news_delete' news.slug %}"
 					class="btn btn-outline-danger"
 				>
-					<i class="bi bi-trash"></i> O‘chirish
+					<i class="bi bi-trash"></i> {% blocktrans %}O‘chirish{% endblocktrans %}
 				</a>
 			</div>
 			{% endif %}
@@ -74,7 +75,7 @@
 				<p class="mb-1">{{ comment.body|linebreaks }}</p>
 			</div>
 			{% endfor %} {% else %}
-			<p class="text-muted">Hozircha izohlar mavjud emas 🙁</p>
+			<p class="text-muted">{% blocktrans %}Hozircha izohlar mavjud emas 🙁{% endblocktrans %}</p>
 			{% endif %}
 		</div>
 	</div>
@@ -83,14 +84,14 @@
 	{% if request.user.is_authenticated %}
 	<div class="card shadow-sm mt-4">
 		<div class="card-body">
-			<h3 class="mb-3">✍️ Izoh qoldirish</h3>
+			<h3 class="mb-3">{% blocktrans %}✍️ Izoh qoldirish{% endblocktrans %}</h3>
 			<form method="POST" class="needs-validation" novalidate>
 				{% csrf_token %}
 				<div class="mb-3">
 					{{ comment_form.body.label_tag }} {{ comment_form.body|add_class:"form-control" }}
 				</div>
 				<button type="submit" class="btn btn-primary">
-					<i class="bi bi-send-fill"></i> Yuborish
+					<i class="bi bi-send-fill"></i> {% blocktrans %}Yuborish{% endblocktrans %}
 				</button>
 			</form>
 		</div>
@@ -99,16 +100,16 @@
 	<div class="alert alert-warning mt-4 shadow-sm">
 		<p class="mb-1">
 			<i class="bi bi-exclamation-circle"></i>
-			Faqatgina <strong>ro‘yxatdan o‘tgan foydalanuvchilar</strong> izoh
-			qoldirishi mumkin.
+{% blocktrans %}			Faqatgina <strong>ro‘yxatdan o‘tgan foydalanuvchilar</strong> izoh
+			qoldirishi mumkin.{% endblocktrans %}
 		</p>
 		<p class="mb-0">
-			👉 Izoh qoldirish uchun
+			{% blocktrans %}👉 Izoh qoldirish uchun{% endblocktrans %}
 			<a href="{% url 'user_register' %}" class="alert-link"
-				>ro‘yxatdan o‘ting</a
+				>{% blocktrans %}ro‘yxatdan o‘ting{% endblocktrans %}</a
 			>
-			yoki
-			<a href="{% url 'login' %}" class="alert-link">tizimga kiring</a>.
+		{% blocktrans %}	yoki{% endblocktrans %}
+			<a href="{% url 'login' %}" class="alert-link">{% blocktrans %}tizimga kiring{% endblocktrans %}</a>.
 		</p>
 	</div>
 	{% endif %}

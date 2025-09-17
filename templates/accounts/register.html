@@ -1,5 +1,5 @@
-{% extends 'news/base.html' %} {% load static %} {% block title %}
-Foydalanuvchilarni ro'yxatdan o'tkazish {% endblock title %} {% block content %}
+{% extends 'news/base.html' %} {% load static %} {% load i18n %} 
+{% block title %} Foydalanuvchilarni ro'yxatdan o'tkazish {% endblock title %} {% block content %}
 <div
 	class="container d-flex justify-content-center align-items-center"
 	style="min-height: 80vh"
@@ -7,26 +7,32 @@ Foydalanuvchilarni ro'yxatdan o'tkazish {% endblock title %} {% block content %}
 	<div class="col-md-6">
 		<div class="card shadow-lg border-0 rounded-3">
 			<div class="card-header bg-primary text-white text-center">
-				<h4 class="mb-0">Yangi foydalanuvchi ro'yxatdan o'tishi</h4>
+				<h4 class="mb-0">
+					{% blocktrans %}Yangi foydalanuvchi ro'yxatdan o'tishi{% endblocktrans
+					%}
+				</h4>
 			</div>
 			<div class="card-body">
 				<p class="text-muted text-center">
-					Iltimos, quyidagi ma'lumotlarni to'ldiring.
+					{% blocktrans %}Iltimos, quyidagi ma'lumotlarni to'ldiring.{%
+					endblocktrans %}
 				</p>
 				<form method="post">
 					{% csrf_token %}
 					<div class="mb-3">{{ user_form.as_p }}</div>
 					<div class="d-grid">
 						<button type="submit" class="btn btn-success">
-							📝 Ro'yxatdan o'tish
+							📝 {% blocktrans %}Ro'yxatdan o'tish{% endblocktrans %}
 						</button>
 					</div>
 				</form>
 			</div>
 			<div class="card-footer text-center">
 				<small>
-					Allaqachon akkountingiz bormi?
-					<a href="{% url 'login' %}" class="text-primary">Kirish</a>
+					{% blocktrans %}Allaqachon akkountingiz bormi?{% endblocktrans %}
+					<a href="{% url 'login' %}" class="text-primary"
+						>{% blocktrans %}Kirish{% endblocktrans %}</a
+					>
 				</small>
 			</div>
 		</div>

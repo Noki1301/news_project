@@ -1,10 +1,11 @@
 {% extends "news/base.html"%}
+{% load i18n %}
 
-{% block title %} Qidiruv natijalari {% endblock title %}
+{% block title %} {% blocktrans %}Qidiruv natijalari{% endblocktrans %} {% endblock title %}
 
 {% block content %}
 <div class="container my-4">
-    <h2 class="mb-4">🔎 Qidiruv natijalari</h2>
+    <h2 class="mb-4">{% blocktrans %}🔎 Qidiruv natijalari{% endblocktrans %}</h2>
 
     {% if news_all %}
         <div class="row">
@@ -29,7 +30,7 @@
                             </p>
                             <a href="{% url 'news:news_detail' new.slug %}" 
                                class="btn btn-outline-primary mt-auto">
-                                Batafsil o‘qish →
+                                {% blocktrans %}Batafsil o‘qish →{% endblocktrans %}
                             </a>
                         </div>
                     </div>
@@ -38,7 +39,7 @@
         </div>
     {% else %}
         <div class="alert alert-warning">
-            Qidiruv bo‘yicha hech narsa topilmadi 😕
+{% blocktrans %}            Qidiruv bo‘yicha hech narsa topilmadi 😕{% endblocktrans %}
         </div>
     {% endif %}
 </div>

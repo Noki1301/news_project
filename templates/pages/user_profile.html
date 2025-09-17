@@ -1,11 +1,12 @@
-{% extends 'news/base.html'%} {% load static %} {% block title %}Foydalanuvchi
+{% extends 'news/base.html'%} {% load static %} {% load i18n %}
+{% block title %}Foydalanuvchi
 profili{% endblock title %} {% block content %}
 <div class="container mt-5">
 	<div class="row justify-content-center">
 		<div class="col-md-6">
 			<div class="card shadow-lg border-0 rounded-3">
 				<div class="card-header bg-primary text-white text-center">
-					<h3 class="mb-0">Foydalanuvchi profili</h3>
+					<h3 class="mb-0">{% blocktrans %}Foydalanuvchi profili{% endblocktrans %}</h3>
 				</div>
 				<div class="card-body text-center">
 					<img
@@ -18,25 +19,25 @@ profili{% endblock title %} {% block content %}
 					<h4 class="mb-3">{{ user.username }}</h4>
 					<ul class="list-group list-group-flush text-start mb-3">
 						<li class="list-group-item">
-							<strong>Email:</strong> {{ user.email }}
+							<strong>{% blocktrans %}Email:{% endblocktrans %}</strong> {{ user.email }}
 						</li>
 						<li class="list-group-item">
-							<strong>Ism:</strong> {{ user.first_name }}
+							<strong>{% blocktrans %}Ism:{% endblocktrans %}</strong> {{ user.first_name }}
 						</li>
 						<li class="list-group-item">
-							<strong>Familiya:</strong> {{ user.last_name }}
+							<strong>{% blocktrans %}Familiya:{% endblocktrans %}</strong> {{ user.last_name }}
 						</li>
 						<li class="list-group-item">
-							<strong>Tug'ilgan kun:</strong>
+							<strong>{% blocktrans %}Tug'ilgan kun:{% endblocktrans %}</strong>
 							{{ user.profile.date_of_birth }}
 						</li>
 					</ul>
 					<div class="d-grid gap-2">
 						<a href="{% url 'user_edit' %}" class="btn btn-success">
-							<i class="bi bi-pencil-square"></i> Profilni tahrirlash
+							<i class="bi bi-pencil-square"></i> {% blocktrans %}Profilni tahrirlash{% endblocktrans %}
 						</a>
 						<a href="{% url 'password_change' %}" class="btn btn-danger">
-							<i class="bi bi-key"></i> Parolni almashtirish
+							<i class="bi bi-key"></i> {% blocktrans %}Parolni almashtirish{% endblocktrans %}
 						</a>
 					</div>
 				</div>

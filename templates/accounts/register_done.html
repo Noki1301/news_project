@@ -1,7 +1,8 @@
-{% extends 'news/base.html' %} {% load static %} {% block title %}
+{% extends 'news/base.html' %} {% load static %} {% load i18n %}
+{% block title %}
 Foydalanuvchilarni ruyhatdan o'tkazish {% endblock title %} {% block content %}
 <div class="container">
-	<h1>{{new_user.username}},tabriklaymiz ruyhatdan muvaffaqiyatli o'tdingiz!</h1>
-	<p>Endi saytga. <a href='{% url 'login' %}'>login</a> qilishingiz mumkin.</p>
+	<h1>{{new_user.username}},{% blocktrans %}tabriklaymiz ruyhatdan muvaffaqiyatli o'tdingiz!{% endblocktrans %}</h1>
+	<p>{% blocktrans %}Endi saytga.{% endblocktrans %} <a href='{% url 'login' %}'>{% blocktrans %}login{% endblocktrans %}</a> {% blocktrans %}qilishingiz mumkin.{% endblocktrans %}</p>
 </div>
 {% endblock content %}
