@@ -1,0 +1,13 @@
+{% extends "news/base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+  <h3>{% trans "Yangi foydalanuvchi" %}</h3>
+  <form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">{% trans "Saqlash" %}</button>
+    <a href="{% url 'news:admin_page' %}" class="btn btn-secondary">{% trans "Bekor qilish" %}</a>
+  </form>
+</div>
+{% endblock %}

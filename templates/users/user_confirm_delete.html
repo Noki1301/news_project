@@ -1,0 +1,10 @@
+{% extends "news/base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h5>{% trans "Foydalanuvchini o‘chirishni tasdiqlang" %}: {{ user.username }}</h5>
+  <form method="post">{% csrf_token %}
+    <button class="btn btn-danger">{% trans "Ha, o‘chirilsin" %}</button>
+    <a class="btn btn-secondary" href="{% url 'news:admin_page' %}">{% trans "Yo‘q" %}</a>
+  </form>
+</div>
+{% endblock %}

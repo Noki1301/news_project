@@ -22,6 +22,11 @@ from news_app.custom_permissions import OnlyLoggedSuperUser
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.db.models import Q
+from django.core.paginator import Paginator
+from django.views.decorators.http import require_POST
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.hashers import make_password
+
 
 # Create your views here.
 
@@ -270,9 +275,42 @@ class NewsCreateView(OnlyLoggedSuperUser, CreateView):
 @user_passes_test(lambda u: u.is_superuser)
 def admin_page_view(request):
     admin_users = User.objects.filter(is_superuser=True)
-    context = {"admin_users": admin_users}
 
+    # --- Yangiliklarni ko‘rish / qidirish / filtr / paginate ---
+    q = request.GET.get("q", "").strip()
+    st = request.GET.get("status", "").strip()  # 'DF' yoki 'PB' yoki ''
+    page = request.GET.get("page", 1)
+
+    news_qs = News.objects.select_related("category").all().order_by("-publish_time")
+    if q:
+        news_qs = news_qs.filter(Q(title__icontains=q) | Q(body__icontains=q))
+    if st in {"DF", "PB"}:
+        news_qs = news_qs.filter(status=st)
+
+    paginator = Paginator(news_qs, 10)  # sahifada 10 ta
+    news_page = paginator.get_page(page)
+
+    context = {
+        "admin_users": admin_users,
+        "news_page": news_page,  # paginated object
+        "q": q,
+        "st": st,
+    }
     return render(request, "pages/admin_page.html", context=context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_POST
+def toggle_status(request, slug):
+    obj = get_object_or_404(News, slug=slug)
+    obj.status = (
+        News.Status.Published if obj.status == News.Status.Draft else News.Status.Draft
+    )
+    obj.save(update_fields=["status"])
+    messages.success(request, "Holat o‘zgartirildi.")
+    # qaytishda qidiruv/paginatsiya parametrlari yo‘qolmasin (Referrerga qaytamiz)
+    return redirect(request.META.get("HTTP_REFERER", obj.get_absolute_url()))
 
 
 class SearchResultsList(ListView):
@@ -281,5 +319,52 @@ class SearchResultsList(ListView):
     context_object_name = "news_all"
 
     def get_queryset(self):
-        query = self.request.GET.get("q")
+        query = (self.request.GET.get("q") or "").strip()
+        if not query:
+            return News.objects.none()
         return News.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
+
+        query = (self.request.GET.get("q") or "").strip()
+        if not query:
+            return News.objects.none()
+        return News.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def create_user_view(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Yangi foydalanuvchi yaratildi.")
+            return redirect("news:admin_page")
+    else:
+        form = UserCreationForm()
+    return render(request, "users/user_form.html", {"form": form})
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def delete_user_view(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == "POST":
+        user.delete()
+        messages.success(request, "Foydalanuvchi o‘chirildi.")
+        return redirect("news:admin_page")
+    return render(request, "users/user_confirm_delete.html", {"user": user})
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def reset_password_view(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == "POST":
+        new_password = request.POST.get("new_password", "").strip()
+        if new_password:
+            user.password = make_password(new_password)
+            user.save(update_fields=["password"])
+            messages.success(request, "Parol yangilandi.")
+            return redirect("news:admin_page")
+        messages.error(request, "Yangi parol bo‘sh bo‘lmasin.")
+    return render(request, "users/user_reset_password.html", {"user": user})

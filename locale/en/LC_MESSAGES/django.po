@@ -5,8 +5,8 @@ msgstr ""
 "POT-Creation-Date: 2025-09-15 12:00+0000\n"
 "PO-Revision-Date: 2025-09-15 12:00+0000\n"
 "Last-Translator: Nodir <youremail@example.com>\n"
-"Language-Team: Russian\n"
-"Language: ru\n"
+"Language-Team: English\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -201,6 +201,7 @@ msgid "Tahrirlash"
 msgstr "Edit"
 
 #: .\templates\news\news_detail.html:54
+#: templates/pages/admin_page.html
 msgid "O‘chirish"
 msgstr "Delete"
 
@@ -338,3 +339,51 @@ msgstr "Edit profile"
 #: .\templates\pages\user_profile.html:39
 msgid "Parolni almashtirish"
 msgstr "Change password"
+
+# --- Users management additions (merged, no duplicates) ---
+
+#: templates/pages/admin_page.html
+msgid "Yangi foydalanuvchi qo‘shish"
+msgstr "Add new user"
+
+#: templates/pages/admin_page.html
+#: templates/users/user_reset_password.html
+msgid "Parolni yangilash"
+msgstr "Reset password"
+
+#: templates/pages/admin_page.html
+msgid "O‘chirishni tasdiqlaysizmi?"
+msgstr "Do you confirm deletion?"
+
+#: templates/users/user_form.html
+msgid "Yangi foydalanuvchi"
+msgstr "New user"
+
+#: templates/users/user_form.html
+msgid "Saqlash"
+msgstr "Save"
+
+#: templates/users/user_form.html
+#: templates/users/user_reset_password.html
+msgid "Bekor qilish"
+msgstr "Cancel"
+
+#: templates/users/user_confirm_delete.html
+msgid "Foydalanuvchini o‘chirishni tasdiqlang"
+msgstr "Confirm user deletion"
+
+#: templates/users/user_confirm_delete.html
+msgid "Ha, o‘chirilsin"
+msgstr "Yes, delete"
+
+#: templates/users/user_confirm_delete.html
+msgid "Yo‘q"
+msgstr "No"
+
+#: templates/users/user_reset_password.html
+msgid "Yangi parol"
+msgstr "New password"
+
+#: templates/users/user_reset_password.html
+msgid "Yangilash"
+msgstr "Update"

@@ -10,6 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
 #: .\config\settings.py:126
 msgid "Uzbek"
 msgstr "Узбекский"
@@ -199,6 +200,7 @@ msgid "Tahrirlash"
 msgstr "Редактировать"
 
 #: .\templates\news\news_detail.html:54
+#: templates/pages/admin_page.html
 msgid "O‘chirish"
 msgstr "Удалить"
 
@@ -334,3 +336,51 @@ msgstr "Редактировать профиль"
 #: .\templates\pages\user_profile.html:39
 msgid "Parolni almashtirish"
 msgstr "Сменить пароль"
+
+# --- Yangi foydalanuvchi boshqaruvi (ADMIN PAGE / USERS) ---
+
+#: templates/pages/admin_page.html
+msgid "Yangi foydalanuvchi qo‘shish"
+msgstr "Добавить нового пользователя"
+
+#: templates/pages/admin_page.html
+#: templates/users/user_reset_password.html:5
+msgid "Parolni yangilash"
+msgstr "Сбросить пароль"
+
+#: templates/pages/admin_page.html
+msgid "O‘chirishni tasdiqlaysizmi?"
+msgstr "Вы подтверждаете удаление?"
+
+#: templates/users/user_form.html:5
+msgid "Yangi foydalanuvchi"
+msgstr "Новый пользователь"
+
+#: templates/users/user_form.html:9
+msgid "Saqlash"
+msgstr "Сохранить"
+
+#: templates/users/user_form.html:10
+#: templates/users/user_reset_password.html:15
+msgid "Bekor qilish"
+msgstr "Отмена"
+
+#: templates/users/user_confirm_delete.html:5
+msgid "Foydalanuvchini o‘chirishni tasdiqlang"
+msgstr "Подтвердите удаление пользователя"
+
+#: templates/users/user_confirm_delete.html:8
+msgid "Ha, o‘chirilsin"
+msgstr "Да, удалить"
+
+#: templates/users/user_confirm_delete.html:9
+msgid "Yo‘q"
+msgstr "Нет"
+
+#: templates/users/user_reset_password.html:8
+msgid "Yangi parol"
+msgstr "Новый пароль"
+
+#: templates/users/user_reset_password.html:12
+msgid "Yangilash"
+msgstr "Обновить"
